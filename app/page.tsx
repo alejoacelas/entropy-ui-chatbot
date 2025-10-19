@@ -86,77 +86,112 @@ const ChatBotDemo = () => {
       <div className="flex flex-col h-full">
         <Conversation className="h-full">
           <ConversationContent>
-            {messages.map((message) => (
-              <div key={message.id}>
-                {message.role === 'assistant' && message.parts.filter((part) => part.type === 'source-url').length > 0 && (
-                  <Sources>
-                    <SourcesTrigger
-                      count={
-                        message.parts.filter(
-                          (part) => part.type === 'source-url',
-                        ).length
-                      }
-                    />
-                    {message.parts.filter((part) => part.type === 'source-url').map((part, i) => (
-                      <SourcesContent key={`${message.id}-${i}`}>
-                        <Source
-                          key={`${message.id}-${i}`}
-                          href={part.url}
-                          title={part.url}
-                        />
-                      </SourcesContent>
-                    ))}
-                  </Sources>
-                )}
-                {message.parts.map((part, i) => {
-                  switch (part.type) {
-                    case 'text':
-                      return (
-                        <Fragment key={`${message.id}-${i}`}>
-                          <Message from={message.role}>
-                            <MessageContent>
-                              <Response>
-                                {part.text}
-                              </Response>
-                            </MessageContent>
-                          </Message>
-                          {message.role === 'assistant' && i === messages.length - 1 && (
-                            <Actions className="mt-2">
-                              <Action
-                                onClick={() => regenerate()}
-                                label="Retry"
-                              >
-                                <RefreshCcwIcon className="size-3" />
-                              </Action>
-                              <Action
-                                onClick={() =>
-                                  navigator.clipboard.writeText(part.text)
-                                }
-                                label="Copy"
-                              >
-                                <CopyIcon className="size-3" />
-                              </Action>
-                            </Actions>
-                          )}
-                        </Fragment>
-                      );
-                    case 'reasoning':
-                      return (
-                        <Reasoning
-                          key={`${message.id}-${i}`}
-                          className="w-full"
-                          isStreaming={status === 'streaming' && i === message.parts.length - 1 && message.id === messages.at(-1)?.id}
-                        >
-                          <ReasoningTrigger />
-                          <ReasoningContent>{part.text}</ReasoningContent>
-                        </Reasoning>
-                      );
-                    default:
-                      return null;
+            {messages.map((message) => {
+              // Group contiguous text parts together
+              const groupedParts: Array<{ type: string; content: any; indices: number[] }> = [];
+              let currentTextGroup: { type: 'text'; content: string; indices: number[] } | null = null;
+
+              message.parts.forEach((part, i) => {
+                if (part.type === 'text') {
+                  if (currentTextGroup) {
+                    currentTextGroup.content += part.text;
+                    currentTextGroup.indices.push(i);
+                  } else {
+                    currentTextGroup = { type: 'text', content: part.text, indices: [i] };
                   }
-                })}
-              </div>
-            ))}
+                } else {
+                  // Push the current text group if it exists
+                  if (currentTextGroup) {
+                    groupedParts.push(currentTextGroup);
+                    currentTextGroup = null;
+                  }
+                  // Add non-text part
+                  groupedParts.push({ type: part.type, content: part, indices: [i] });
+                }
+              });
+
+              // Don't forget to push the last text group if it exists
+              if (currentTextGroup) {
+                groupedParts.push(currentTextGroup);
+              }
+
+              const isLastMessage = message.id === messages.at(-1)?.id;
+              const allText = message.parts.filter(p => p.type === 'text').map(p => p.text).join('');
+
+              return (
+                <div key={message.id}>
+                  {message.role === 'assistant' && message.parts.filter((part) => part.type === 'source-url').length > 0 && (
+                    <Sources>
+                      <SourcesTrigger
+                        count={
+                          message.parts.filter(
+                            (part) => part.type === 'source-url',
+                          ).length
+                        }
+                      />
+                      {message.parts.filter((part) => part.type === 'source-url').map((part, i) => (
+                        <SourcesContent key={`${message.id}-${i}`}>
+                          <Source
+                            key={`${message.id}-${i}`}
+                            href={part.url}
+                            title={part.url}
+                          />
+                        </SourcesContent>
+                      ))}
+                    </Sources>
+                  )}
+                  {groupedParts.map((group, groupIdx) => {
+                    switch (group.type) {
+                      case 'text':
+                        return (
+                          <Fragment key={`${message.id}-group-${groupIdx}`}>
+                            <Message from={message.role}>
+                              <MessageContent>
+                                <Response>
+                                  {group.content}
+                                </Response>
+                              </MessageContent>
+                            </Message>
+                            {message.role === 'assistant' && isLastMessage && groupIdx === groupedParts.length - 1 && (
+                              <Actions className="mt-2">
+                                <Action
+                                  onClick={() => regenerate()}
+                                  label="Retry"
+                                >
+                                  <RefreshCcwIcon className="size-3" />
+                                </Action>
+                                <Action
+                                  onClick={() =>
+                                    navigator.clipboard.writeText(allText)
+                                  }
+                                  label="Copy"
+                                >
+                                  <CopyIcon className="size-3" />
+                                </Action>
+                              </Actions>
+                            )}
+                          </Fragment>
+                        );
+                      case 'reasoning':
+                        const part = group.content;
+                        const isLastPart = groupIdx === groupedParts.length - 1;
+                        return (
+                          <Reasoning
+                            key={`${message.id}-group-${groupIdx}`}
+                            className="w-full"
+                            isStreaming={status === 'streaming' && isLastPart && isLastMessage}
+                          >
+                            <ReasoningTrigger />
+                            <ReasoningContent>{part.text}</ReasoningContent>
+                          </Reasoning>
+                        );
+                      default:
+                        return null;
+                    }
+                  })}
+                </div>
+              );
+            })}
             {status === 'submitted' && <Loader />}
           </ConversationContent>
           <ConversationScrollButton />
