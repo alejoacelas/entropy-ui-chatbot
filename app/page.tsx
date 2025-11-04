@@ -28,7 +28,7 @@ import {
   PromptInputTools,
 } from '@/components/ai-elements/prompt-input';
 import { Action, Actions } from '@/components/ai-elements/actions';
-import { Fragment, useState } from 'react';
+import { Fragment, useState, useEffect } from 'react';
 import { useChat } from '@ai-sdk/react';
 import { Response } from '@/components/ai-elements/response';
 import { CopyIcon, GlobeIcon, RefreshCcwIcon } from 'lucide-react';
@@ -44,6 +44,7 @@ import {
   ReasoningTrigger,
 } from '@/components/ai-elements/reasoning';
 import { Loader } from '@/components/ai-elements/loader';
+import { Questionnaire, type QuestionnaireAnswers } from '@/components/questionnaire';
 
 const models = [
   {
@@ -52,11 +53,44 @@ const models = [
   },
 ];
 
+const QUESTIONNAIRE_STORAGE_KEY = 'questionnaire_completed';
+const QUESTIONNAIRE_ANSWERS_KEY = 'questionnaire_answers';
+
 const ChatBotDemo = () => {
+  const [showQuestionnaire, setShowQuestionnaire] = useState<boolean | null>(null);
+  const [questionnaireAnswers, setQuestionnaireAnswers] = useState<QuestionnaireAnswers | null>(null);
   const [input, setInput] = useState('');
   const [model, setModel] = useState<string>(models[0].value);
   const [webSearch, setWebSearch] = useState(true);
   const { messages, sendMessage, status, regenerate } = useChat();
+
+  // Check if questionnaire has been completed
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const completed = localStorage.getItem(QUESTIONNAIRE_STORAGE_KEY);
+      const answers = localStorage.getItem(QUESTIONNAIRE_ANSWERS_KEY);
+      setShowQuestionnaire(completed !== 'true');
+      if (answers) {
+        try {
+          setQuestionnaireAnswers(JSON.parse(answers));
+        } catch {
+          // Ignore parse errors
+        }
+      }
+    }
+  }, []);
+
+  const handleQuestionnaireComplete = (answers: QuestionnaireAnswers) => {
+    localStorage.setItem(QUESTIONNAIRE_STORAGE_KEY, 'true');
+    localStorage.setItem(QUESTIONNAIRE_ANSWERS_KEY, JSON.stringify(answers));
+    setQuestionnaireAnswers(answers);
+    setShowQuestionnaire(false);
+  };
+
+  const handleQuestionnaireSkip = () => {
+    localStorage.setItem(QUESTIONNAIRE_STORAGE_KEY, 'true');
+    setShowQuestionnaire(false);
+  };
 
   const handleSubmit = (message: PromptInputMessage) => {
     const hasText = Boolean(message.text);
@@ -65,6 +99,9 @@ const ChatBotDemo = () => {
     if (!(hasText || hasAttachments)) {
       return;
     }
+
+    // Only send context messages on the first message
+    const isFirstMessage = messages.length === 0;
 
     sendMessage(
       { 
@@ -75,11 +112,24 @@ const ChatBotDemo = () => {
         body: {
           model: model,
           webSearch: webSearch,
+          ...(isFirstMessage && questionnaireAnswers?.answers
+            ? { contextMessages: questionnaireAnswers.answers }
+            : {}),
         },
       },
     );
     setInput('');
   };
+
+  // Show loading state while checking questionnaire status
+  if (showQuestionnaire === null) {
+    return null;
+  }
+
+  // Show questionnaire if not completed
+  if (showQuestionnaire) {
+    return <Questionnaire onComplete={handleQuestionnaireComplete} onSkip={handleQuestionnaireSkip} />;
+  }
 
   return (
     <div className="max-w-4xl mx-auto p-6 relative size-full h-screen">

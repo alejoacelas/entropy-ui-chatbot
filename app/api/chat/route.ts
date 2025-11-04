@@ -22,26 +22,71 @@ export async function POST(req: Request) {
     messages,
     model,
     webSearch,
+    contextMessages,
   }: { 
     messages: UIMessage[]; 
     model: string; 
     webSearch: boolean;
+    contextMessages?: Array<{ question: string; answer: string }>;
   } = await req.json();
 
-  const system = await getSystemPrompt();
+  const systemPrompt = await getSystemPrompt();
+
+  // Wrap user messages with <user_message> tags
+  const wrapUserMessage = (text: string): string => {
+    return `<user_message>${text}</user_message>`;
+  };
+
+  // Wrap context messages with <user_context> tags
+  const wrapContextMessage = (question: string, answer: string): string => {
+    return `<user_context>${question}\n${answer}</user_context>`;
+  };
+
+  // Build messages array: system prompt, then context messages, then user messages
+  const messagesWithSystem: Array<Omit<UIMessage, 'id'>> = [
+    {
+      role: 'user',
+      parts: [{ type: 'text', text: systemPrompt }],
+    },
+    // Add context messages if provided
+    ...(contextMessages && contextMessages.length > 0
+      ? [{
+          role: 'user' as const,
+          parts: [{
+            type: 'text' as const,
+            text: wrapContextMessage(
+              contextMessages.map((ctx, i) => `${ctx.question}\n${ctx.answer}`).join('\n---\n'),
+            )
+          }],
+        }]
+      : []
+    ),
+    ...messages.map(({ id, ...message }) => {
+      // Wrap text parts in user messages with tags
+      if (message.role === 'user') {
+        return {
+          ...message,
+          parts: message.parts.map((part) => {
+            if (part.type === 'text') {
+              return { ...part, text: wrapUserMessage(part.text) };
+            }
+            return part;
+          }),
+        };
+      }
+      return message;
+    }),
+  ];
 
   // Create web search and web fetch tools for Anthropic models
   const webSearchTool = anthropic.tools.webSearch_20250305();
-  const webFetchTool = anthropic.tools.webFetch_20250910();
 
   const result = streamText({
     model: model,
-    messages: convertToModelMessages(messages),
-    system,
+    messages: convertToModelMessages(messagesWithSystem),
     maxOutputTokens: 16000,
     tools: webSearch ? {
       web_search: webSearchTool,
-      web_fetch: webFetchTool,
     } : undefined,
     providerOptions: {
       anthropic: {
