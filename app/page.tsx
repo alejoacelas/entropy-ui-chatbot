@@ -137,22 +137,95 @@ const ChatBotDemo = () => {
         <Conversation className="h-full">
           <ConversationContent>
             {messages.map((message) => {
-              // Group contiguous text parts together
-              const groupedParts: Array<{ type: string; content: any; indices: number[] }> = [];
-              let currentTextGroup: { type: 'text'; content: string; indices: number[] } | null = null;
+              // Process parts to track citations and text with inline footnotes
+              // Citations appear BEFORE the text they reference in the stream
+              // We need to insert footnote markers right after the text that follows each citation
+              const groupedParts: Array<{ 
+                type: string; 
+                content: any; 
+                indices: number[];
+                textSegments?: Array<{ text: string; citations: Array<{ url: string; title?: string; footnoteNumber: number }> }>;
+                citations?: Array<{ url: string; title?: string; footnoteNumber: number }>;
+              }> = [];
+              
+              let currentTextGroup: { 
+                type: 'text'; 
+                textSegments: Array<{ text: string; citations: Array<{ url: string; title?: string; footnoteNumber: number }> }>;
+                indices: number[];
+                allCitations: Array<{ url: string; title?: string; footnoteNumber: number }>;
+              } | null = null;
+              
+              let pendingCitations: Array<{ url: string; title?: string }> = [];
+              let footnoteCounter = 0;
 
               message.parts.forEach((part, i) => {
-                if (part.type === 'text') {
-                  if (currentTextGroup) {
-                    currentTextGroup.content += part.text;
-                    currentTextGroup.indices.push(i);
-                  } else {
-                    currentTextGroup = { type: 'text', content: part.text, indices: [i] };
+                if (part.type === 'source-url') {
+                  // Citation appears - add to pending citations
+                  // These will be inserted right after the next text delta
+                  const citation = {
+                    url: part.url || '',
+                    title: part.title || part.url || '',
+                  };
+                  pendingCitations.push(citation);
+                } else if (part.type === 'text') {
+                  // Start text group if needed
+                  if (!currentTextGroup) {
+                    currentTextGroup = { 
+                      type: 'text', 
+                      textSegments: [],
+                      indices: [],
+                      allCitations: [],
+                    };
                   }
+                  
+                  // If we have pending citations, start a new text segment
+                  // Otherwise, continue the current segment
+                  if (pendingCitations.length > 0) {
+                    // Assign footnote numbers to pending citations
+                    const citationsWithNumbers = pendingCitations.map((citation) => {
+                      footnoteCounter++;
+                      return {
+                        ...citation,
+                        footnoteNumber: footnoteCounter,
+                      };
+                    });
+                    
+                    // Add citations to the group's citation list
+                    currentTextGroup.allCitations.push(...citationsWithNumbers);
+                    
+                    // Start a new text segment with these citations
+                    currentTextGroup.textSegments.push({
+                      text: part.text,
+                      citations: citationsWithNumbers,
+                    });
+                    
+                    pendingCitations = []; // Clear pending
+                  } else {
+                    // Continue current segment (no citations)
+                    if (currentTextGroup.textSegments.length === 0) {
+                      // Start first segment
+                      currentTextGroup.textSegments.push({
+                        text: part.text,
+                        citations: [],
+                      });
+                    } else {
+                      // Append to last segment
+                      const lastSegment = currentTextGroup.textSegments[currentTextGroup.textSegments.length - 1];
+                      lastSegment.text += part.text;
+                    }
+                  }
+                  
+                  currentTextGroup.indices.push(i);
                 } else {
-                  // Push the current text group if it exists
+                  // Non-text, non-source part encountered
+                  // Finalize current text group if it exists
                   if (currentTextGroup) {
-                    groupedParts.push(currentTextGroup);
+                    groupedParts.push({
+                      type: 'text',
+                      content: currentTextGroup.textSegments,
+                      indices: currentTextGroup.indices,
+                      citations: currentTextGroup.allCitations,
+                    });
                     currentTextGroup = null;
                   }
                   // Add non-text part
@@ -162,7 +235,12 @@ const ChatBotDemo = () => {
 
               // Don't forget to push the last text group if it exists
               if (currentTextGroup) {
-                groupedParts.push(currentTextGroup);
+                groupedParts.push({
+                  type: 'text',
+                  content: currentTextGroup.textSegments,
+                  indices: currentTextGroup.indices,
+                  citations: currentTextGroup.allCitations,
+                });
               }
 
               const isLastMessage = message.id === messages.at(-1)?.id;
@@ -170,36 +248,68 @@ const ChatBotDemo = () => {
 
               return (
                 <div key={message.id}>
-                  {message.role === 'assistant' && message.parts.filter((part) => part.type === 'source-url').length > 0 && (
-                    <Sources>
-                      <SourcesTrigger
-                        count={
-                          message.parts.filter(
-                            (part) => part.type === 'source-url',
-                          ).length
-                        }
-                      />
-                      {message.parts.filter((part) => part.type === 'source-url').map((part, i) => (
-                        <SourcesContent key={`${message.id}-${i}`}>
-                          <Source
-                            key={`${message.id}-${i}`}
-                            href={part.url}
-                            title={part.url}
-                          />
-                        </SourcesContent>
-                      ))}
-                    </Sources>
-                  )}
                   {groupedParts.map((group, groupIdx) => {
                     switch (group.type) {
                       case 'text':
+                        // Render text with inline footnotes
+                        // Citations are inserted right after the text delta that followed them
+                        const renderTextWithFootnotes = () => {
+                          const textSegments = group.content as Array<{ text: string; citations: Array<{ url: string; title?: string; footnoteNumber: number }> }>;
+                          const allCitations = group.citations || [];
+                          
+                          if (!textSegments || textSegments.length === 0) {
+                            return <Response></Response>;
+                          }
+
+                          // Build text with inline footnote markers
+                          // Each segment has its text followed by its citations' footnote markers
+                          return (
+                            <div className="space-y-3">
+                              <Response>
+                                {textSegments.map((segment, segIdx) => (
+                                  <span key={`segment-${segIdx}`}>
+                                    {segment.text}
+                                    {segment.citations.map((citation, citIdx) => (
+                                      <sup
+                                        key={`footnote-${segIdx}-${citIdx}`}
+                                        className="text-blue-500 hover:text-blue-700 cursor-pointer ml-0.5 font-medium"
+                                        title={citation.title}
+                                      >
+                                        {citation.footnoteNumber}
+                                      </sup>
+                                    ))}
+                                  </span>
+                                ))}
+                              </Response>
+                              {allCitations.length > 0 && (
+                                <div className="text-xs text-gray-600 mt-2 pt-2 border-t border-gray-200 space-y-1">
+                                  <div className="font-semibold mb-1 text-gray-700">Sources:</div>
+                                  {allCitations.map((citation, idx) => (
+                                    <div key={`source-${idx}`} className="flex gap-2">
+                                      <span className="font-semibold text-gray-700 flex-shrink-0">
+                                        {citation.footnoteNumber}.
+                                      </span>
+                                      <a
+                                        href={citation.url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-blue-500 hover:text-blue-700 hover:underline break-words"
+                                      >
+                                        {citation.title || citation.url}
+                                      </a>
+                                    </div>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
+                          );
+                        };
+
                         return (
                           <Fragment key={`${message.id}-group-${groupIdx}`}>
                             <Message from={message.role}>
                               <MessageContent>
-                                <Response>
-                                  {group.content}
-                                </Response>
+                                {renderTextWithFootnotes()}
                               </MessageContent>
                             </Message>
                             {message.role === 'assistant' && isLastMessage && groupIdx === groupedParts.length - 1 && (

@@ -1,0 +1,54 @@
+diff --git a/node_modules/@ai-sdk/anthropic/dist/internal/index.js b/node_modules/@ai-sdk/anthropic/dist/internal/index.js
+index c378b52..b2ee00c 100644
+--- a/node_modules/@ai-sdk/anthropic/dist/internal/index.js
++++ b/node_modules/@ai-sdk/anthropic/dist/internal/index.js
+@@ -1673,6 +1673,22 @@ function mapAnthropicStopReason({
+ // src/anthropic-messages-language-model.ts
+ function createCitationSource(citation, citationDocuments, generateId2) {
+   var _a;
++  // Handle web search citations
++  if (citation.type === "web_search_result_location") {
++    return {
++      type: "source",
++      sourceType: "url",
++      id: generateId2(),
++      url: citation.url,
++      title: citation.title,
++      providerMetadata: {
++        anthropic: {
++          citedText: citation.cited_text,
++          encryptedIndex: citation.encrypted_index,
++        }
++      }
++    };
++  }
+   if (citation.type !== "page_location" && citation.type !== "char_location") {
+     return;
+   }
+diff --git a/node_modules/@ai-sdk/anthropic/dist/internal/index.mjs b/node_modules/@ai-sdk/anthropic/dist/internal/index.mjs
+index 759e9b1..8a4042c 100644
+--- a/node_modules/@ai-sdk/anthropic/dist/internal/index.mjs
++++ b/node_modules/@ai-sdk/anthropic/dist/internal/index.mjs
+@@ -1683,6 +1683,22 @@ function mapAnthropicStopReason({
+ // src/anthropic-messages-language-model.ts
+ function createCitationSource(citation, citationDocuments, generateId2) {
+   var _a;
++  // Handle web search citations
++  if (citation.type === "web_search_result_location") {
++    return {
++      type: "source",
++      sourceType: "url",
++      id: generateId2(),
++      url: citation.url,
++      title: citation.title,
++      providerMetadata: {
++        anthropic: {
++          citedText: citation.cited_text,
++          encryptedIndex: citation.encrypted_index,
++        }
++      }
++    };
++  }
+   if (citation.type !== "page_location" && citation.type !== "char_location") {
+     return;
+   }
