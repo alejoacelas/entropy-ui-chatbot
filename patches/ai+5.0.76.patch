@@ -1,0 +1,179 @@
+diff --git a/node_modules/ai/dist/index.js b/node_modules/ai/dist/index.js
+index 0cf8963..46f9039 100644
+--- a/node_modules/ai/dist/index.js
++++ b/node_modules/ai/dist/index.js
+@@ -3053,6 +3053,14 @@ var uiMessageChunkSchema = (0, import_provider_utils11.lazyValidator)(
+         filename: import_v47.z.string().optional(),
+         providerMetadata: providerMetadataSchema.optional()
+       }),
++      import_v47.z.strictObject({
++        type: import_v47.z.literal("citation"),
++        citationId: import_v47.z.string(),
++        citedText: import_v47.z.string(),
++        title: import_v47.z.string(),
++        url: import_v47.z.string(),
++        providerMetadata: providerMetadataSchema.optional()
++      }),
+       import_v47.z.strictObject({
+         type: import_v47.z.literal("file"),
+         url: import_v47.z.string(),
+@@ -3708,6 +3716,21 @@ function processUIMessageStream({
+               write();
+               break;
+             }
++            case "citation": {
++              const citationPart = {
++                type: "citation",
++                citationId: chunk.citationId,
++                citedText: chunk.citedText,
++                title: chunk.title,
++                url: chunk.url,
++                providerMetadata: chunk.providerMetadata
++              };
++              console.log('[AI-SDK processUIMessageStream CLIENT] Adding citation part:', citationPart);
++              state.message.parts.push(citationPart);
++              console.log('[AI-SDK processUIMessageStream CLIENT] Total parts:', state.message.parts.length);
++              write();
++              break;
++            }
+             case "tool-input-start": {
+               const toolInvocations = state.message.parts.filter(isToolUIPart);
+               state.partialToolCalls[chunk.toolCallId] = {
+@@ -10142,6 +10165,14 @@ var uiMessagesSchema = (0, import_provider_utils34.lazyValidator)(
+               filename: import_v410.z.string().optional(),
+               providerMetadata: providerMetadataSchema.optional()
+             }),
++            import_v410.z.object({
++              type: import_v410.z.literal("citation"),
++              citationId: import_v410.z.string(),
++              citedText: import_v410.z.string(),
++              title: import_v410.z.string(),
++              url: import_v410.z.string(),
++              providerMetadata: providerMetadataSchema.optional()
++            }),
+             import_v410.z.object({
+               type: import_v410.z.literal("file"),
+               mediaType: import_v410.z.string(),
+diff --git a/node_modules/ai/dist/index.mjs b/node_modules/ai/dist/index.mjs
+index 3896308..dab7ebd 100644
+--- a/node_modules/ai/dist/index.mjs
++++ b/node_modules/ai/dist/index.mjs
+@@ -2681,6 +2681,7 @@ function asContent({
+         case "text":
+         case "reasoning":
+         case "source":
++        case "citation":
+           return part;
+         case "file": {
+           return {
+@@ -2983,6 +2984,14 @@ var uiMessageChunkSchema = lazyValidator(
+         filename: z7.string().optional(),
+         providerMetadata: providerMetadataSchema.optional()
+       }),
++      z7.strictObject({
++        type: z7.literal("citation"),
++        citationId: z7.string(),
++        citedText: z7.string(),
++        title: z7.string(),
++        url: z7.string(),
++        providerMetadata: providerMetadataSchema.optional()
++      }),
+       z7.strictObject({
+         type: z7.literal("file"),
+         url: z7.string(),
+@@ -3638,6 +3647,21 @@ function processUIMessageStream({
+               write();
+               break;
+             }
++            case "citation": {
++              const citationPart = {
++                type: "citation",
++                citationId: chunk.citationId,
++                citedText: chunk.citedText,
++                title: chunk.title,
++                url: chunk.url,
++                providerMetadata: chunk.providerMetadata
++              };
++              console.log('[AI-SDK processUIMessageStream] Adding citation part to message:', citationPart);
++              state.message.parts.push(citationPart);
++              console.log('[AI-SDK processUIMessageStream] Total parts now:', state.message.parts.length);
++              write();
++              break;
++            }
+             case "tool-input-start": {
+               const toolInvocations = state.message.parts.filter(isToolUIPart);
+               state.partialToolCalls[chunk.toolCallId] = {
+@@ -4240,6 +4264,13 @@ function runToolsTransformation({
+         case "tool-input-delta":
+         case "tool-input-end":
+         case "source":
++        case "citation": {
++          if (chunkType === "citation") {
++            console.log('[AI-SDK streamText] Forwarding citation chunk:', chunk);
++          }
++          controller.enqueue(chunk);
++          break;
++        }
+         case "response-metadata":
+         case "error":
+         case "raw": {
+@@ -4718,6 +4749,9 @@ var DefaultStreamTextResult = class {
+         if (part.type === "source") {
+           recordedContent.push(part);
+         }
++        if (part.type === "citation") {
++          recordedContent.push(part);
++        }
+         if (part.type === "tool-call") {
+           recordedContent.push(part);
+         }
+@@ -5147,6 +5181,11 @@ var DefaultStreamTextResult = class {
+                       controller.enqueue(chunk);
+                       break;
+                     }
++                    case "citation": {
++                      console.log('[AI-SDK streamText transform] Citation chunk received:', chunk);
++                      controller.enqueue(chunk);
++                      break;
++                    }
+                     case "tool-input-start": {
+                       activeToolCallToolNames[chunk.id] = chunk.toolName;
+                       const tool3 = tools == null ? void 0 : tools[chunk.toolName];
+@@ -5559,6 +5598,22 @@ var DefaultStreamTextResult = class {
+               }
+               break;
+             }
++            case "citation": {
++              console.log('[AI-SDK toUIMessageStream] Citation part received, sendSources:', sendSources, 'part:', part);
++              if (sendSources) {
++                const citationChunk = {
++                  type: "citation",
++                  citationId: part.id,
++                  citedText: part.citedText,
++                  title: part.title,
++                  url: part.url,
++                  ...part.providerMetadata != null ? { providerMetadata: part.providerMetadata } : {}
++                };
++                console.log('[AI-SDK toUIMessageStream] Enqueuing citation chunk:', citationChunk);
++                controller.enqueue(citationChunk);
++              }
++              break;
++            }
+             case "tool-input-start": {
+               toolNamesByCallId[part.id] = part.toolName;
+               const dynamic = isDynamic(part.id);
+@@ -10119,6 +10174,14 @@ var uiMessagesSchema = lazyValidator2(
+               filename: z10.string().optional(),
+               providerMetadata: providerMetadataSchema.optional()
+             }),
++            z10.object({
++              type: z10.literal("citation"),
++              citationId: z10.string(),
++              citedText: z10.string(),
++              title: z10.string(),
++              url: z10.string(),
++              providerMetadata: providerMetadataSchema.optional()
++            }),
+             z10.object({
+               type: z10.literal("file"),
+               mediaType: z10.string(),

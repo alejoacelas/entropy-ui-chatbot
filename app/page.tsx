@@ -49,7 +49,7 @@ import { Questionnaire, type QuestionnaireAnswers } from '@/components/questionn
 const models = [
   {
     name: 'Claude 4.5 Sonnet',
-    value: 'anthropic/claude-4.5-sonnet',
+    value: 'claude-sonnet-4-5-20250929',
   },
 ];
 
@@ -137,17 +137,31 @@ const ChatBotDemo = () => {
         <Conversation className="h-full">
           <ConversationContent>
             {messages.map((message) => {
-              // Group contiguous text parts together
-              const groupedParts: Array<{ type: string; content: any; indices: number[] }> = [];
-              let currentTextGroup: { type: 'text'; content: string; indices: number[] } | null = null;
+              console.log('[FRONTEND] Rendering message with', message.parts.length, 'parts');
+              console.log('[FRONTEND] Part types:', message.parts.map((p: any) => p.type));
+              const citationParts = message.parts.filter((p: any) => p.type === 'citation');
+              console.log('[FRONTEND] Citation parts found:', citationParts.length, citationParts);
+              
+              // Group contiguous text parts together, collecting citations
+              const groupedParts: Array<{ type: string; content: any; indices: number[]; citations?: any[] }> = [];
+              let currentTextGroup: { type: 'text'; content: string; indices: number[]; citations: any[] } | null = null;
 
-              message.parts.forEach((part, i) => {
+              message.parts.forEach((part: any, i) => {
                 if (part.type === 'text') {
                   if (currentTextGroup) {
                     currentTextGroup.content += part.text;
                     currentTextGroup.indices.push(i);
                   } else {
-                    currentTextGroup = { type: 'text', content: part.text, indices: [i] };
+                    currentTextGroup = { type: 'text', content: part.text, indices: [i], citations: [] };
+                  }
+                } else if (part.type === 'citation') {
+                  console.log('[FRONTEND] Found citation part:', part);
+                  // Add citation to the current text group
+                  if (currentTextGroup) {
+                    currentTextGroup.citations.push(part);
+                    console.log('[FRONTEND] Added to group, total citations:', currentTextGroup.citations.length);
+                  } else {
+                    console.log('[FRONTEND] Warning: citation without text group');
                   }
                 } else {
                   // Push the current text group if it exists
@@ -164,6 +178,9 @@ const ChatBotDemo = () => {
               if (currentTextGroup) {
                 groupedParts.push(currentTextGroup);
               }
+
+              console.log('[FRONTEND] Grouped parts:', groupedParts.length, 'groups');
+              console.log('[FRONTEND] Citations in groups:', groupedParts.map(g => g.citations?.length || 0));
 
               const isLastMessage = message.id === messages.at(-1)?.id;
               const allText = message.parts.filter(p => p.type === 'text').map(p => p.text).join('');
@@ -193,12 +210,25 @@ const ChatBotDemo = () => {
                   {groupedParts.map((group, groupIdx) => {
                     switch (group.type) {
                       case 'text':
+                        // Format citations if they exist
+                        const citationText = group.citations && group.citations.length > 0
+                          ? ' ' + group.citations.map((citation: any) => 
+                              `([${citation.title}: ${citation.citedText}](${citation.url}))`
+                            ).join(' ')
+                          : '';
+                        
+                        const fullContent = group.content + citationText;
+                        
+                        if (group.citations && group.citations.length > 0) {
+                          console.log('[FRONTEND] Rendering text with citations:', group.citations.length, 'fullContent:', fullContent);
+                        }
+                        
                         return (
                           <Fragment key={`${message.id}-group-${groupIdx}`}>
                             <Message from={message.role}>
                               <MessageContent>
                                 <Response>
-                                  {group.content}
+                                  {fullContent}
                                 </Response>
                               </MessageContent>
                             </Message>

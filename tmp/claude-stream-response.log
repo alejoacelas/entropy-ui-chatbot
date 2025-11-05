@@ -1,0 +1,1598 @@
+================================================================================
+Event type: BetaRawMessageStartEvent
+Event data: {
+  "message": {
+    "id": "msg_01L3Gx4kiYqddTs3iN2uw7x7",
+    "container": null,
+    "content": [],
+    "context_management": null,
+    "model": "claude-haiku-4-5-20251001",
+    "role": "assistant",
+    "stop_reason": null,
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "input_tokens": 2222,
+      "output_tokens": 1,
+      "server_tool_use": null,
+      "service_tier": "standard"
+    }
+  },
+  "type": "message_start"
+}
+================================================================================
+
+================================================================================
+Event type: BetaRawContentBlockStartEvent
+Event data: {
+  "content_block": {
+    "citations": null,
+    "text": "",
+    "type": "text"
+  },
+  "index": 0,
+  "type": "content_block_start"
+}
+================================================================================
+
+================================================================================
+Event type: BetaRawContentBlockDeltaEvent
+Event data: {
+  "delta": {
+    "text": "I",
+    "type": "text_delta"
+  },
+  "index": 0,
+  "type": "content_block_delta"
+}
+================================================================================
+
+================================================================================
+Event type: BetaTextEvent
+Event data: {
+  "type": "text",
+  "text": "I",
+  "snapshot": "I"
+}
+================================================================================
+
+================================================================================
+Event type: BetaRawContentBlockDeltaEvent
+Event data: {
+  "delta": {
+    "text": "'ll search for information about whether",
+    "type": "text_delta"
+  },
+  "index": 0,
+  "type": "content_block_delta"
+}
+================================================================================
+
+================================================================================
+Event type: BetaTextEvent
+Event data: {
+  "type": "text",
+  "text": "'ll search for information about whether",
+  "snapshot": "I'll search for information about whether"
+}
+================================================================================
+
+================================================================================
+Event type: BetaRawContentBlockDeltaEvent
+Event data: {
+  "delta": {
+    "text": " Sylvester Stallone wrote the Rocky",
+    "type": "text_delta"
+  },
+  "index": 0,
+  "type": "content_block_delta"
+}
+================================================================================
+
+================================================================================
+Event type: BetaTextEvent
+Event data: {
+  "type": "text",
+  "text": " Sylvester Stallone wrote the Rocky",
+  "snapshot": "I'll search for information about whether Sylvester Stallone wrote the Rocky"
+}
+================================================================================
+
+================================================================================
+Event type: BetaRawContentBlockDeltaEvent
+Event data: {
+  "delta": {
+    "text": " script.",
+    "type": "text_delta"
+  },
+  "index": 0,
+  "type": "content_block_delta"
+}
+================================================================================
+
+================================================================================
+Event type: BetaTextEvent
+Event data: {
+  "type": "text",
+  "text": " script.",
+  "snapshot": "I'll search for information about whether Sylvester Stallone wrote the Rocky script."
+}
+================================================================================
+
+================================================================================
+Event type: BetaContentBlockStopEvent
+Event data: {
+  "index": 0,
+  "type": "content_block_stop",
+  "content_block": {
+    "citations": null,
+    "text": "I'll search for information about whether Sylvester Stallone wrote the Rocky script.",
+    "type": "text"
+  }
+}
+================================================================================
+
+================================================================================
+Event type: BetaRawContentBlockStartEvent
+Event data: {
+  "content_block": {
+    "id": "srvtoolu_01MxKq3B1Q3mzhdZPh3hPE9s",
+    "input": {},
+    "name": "web_search",
+    "type": "server_tool_use"
+  },
+  "index": 1,
+  "type": "content_block_start"
+}
+================================================================================
+
+================================================================================
+Event type: BetaRawContentBlockDeltaEvent
+Event data: {
+  "delta": {
+    "partial_json": "",
+    "type": "input_json_delta"
+  },
+  "index": 1,
+  "type": "content_block_delta"
+}
+================================================================================
+
+================================================================================
+Event type: BetaRawContentBlockDeltaEvent
+Event data: {
+  "delta": {
+    "partial_json": "{\"query\":",
+    "type": "input_json_delta"
+  },
+  "index": 1,
+  "type": "content_block_delta"
+}
+================================================================================
+
+================================================================================
+Event type: BetaRawContentBlockDeltaEvent
+Event data: {
+  "delta": {
+    "partial_json": " \"Sylves",
+    "type": "input_json_delta"
+  },
+  "index": 1,
+  "type": "content_block_delta"
+}
+================================================================================
+
+================================================================================
+Event type: BetaRawContentBlockDeltaEvent
+Event data: {
+  "delta": {
+    "partial_json": "ter Sta",
+    "type": "input_json_delta"
+  },
+  "index": 1,
+  "type": "content_block_delta"
+}
+================================================================================
+
+================================================================================
+Event type: BetaRawContentBlockDeltaEvent
+Event data: {
+  "delta": {
+    "partial_json": "llone wri",
+    "type": "input_json_delta"
+  },
+  "index": 1,
+  "type": "content_block_delta"
+}
+================================================================================
+
+================================================================================
+Event type: BetaRawContentBlockDeltaEvent
+Event data: {
+  "delta": {
+    "partial_json": "te Rock",
+    "type": "input_json_delta"
+  },
+  "index": 1,
+  "type": "content_block_delta"
+}
+================================================================================
+
+================================================================================
+Event type: BetaRawContentBlockDeltaEvent
+Event data: {
+  "delta": {
+    "partial_json": "y s",
+    "type": "input_json_delta"
+  },
+  "index": 1,
+  "type": "content_block_delta"
+}
+================================================================================
+
+================================================================================
+Event type: BetaRawContentBlockDeltaEvent
+Event data: {
+  "delta": {
+    "partial_json": "cript\"}",
+    "type": "input_json_delta"
+  },
+  "index": 1,
+  "type": "content_block_delta"
+}
+================================================================================
+
+================================================================================
+Event type: BetaContentBlockStopEvent
+Event data: {
+  "index": 1,
+  "type": "content_block_stop",
+  "content_block": {
+    "id": "srvtoolu_01MxKq3B1Q3mzhdZPh3hPE9s",
+    "input": {
+      "query": "Sylvester Stallone write Rocky script"
+    },
+    "name": "web_search",
+    "type": "server_tool_use"
+  }
+}
+================================================================================
+
+================================================================================
+Event type: BetaRawContentBlockStartEvent
+Event data: {
+  "content_block": {
+    "content": [
+      {
+        "encrypted_content": "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",
+        "page_age": "1 week ago",
+        "title": "Rocky - Wikipedia",
+        "type": "web_search_result",
+        "url": "https://en.wikipedia.org/wiki/Rocky"
+      },
+      {
+        "encrypted_content": "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",
+        "page_age": "May 8, 2025",
+        "title": "Sylvester Stallone and Rocky: How to Put Yourself into Your Scripts",
+        "type": "web_search_result",
+        "url": "https://blog.kinolime.com/articles/rocky-script-analysis"
+      },
+      {
+        "encrypted_content": "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",
+        "page_age": "September 17, 2023",
+        "title": "Sylvester Stallone Recalls Writing Rocky: 'Nobody Wanted to Make It'",
+        "type": "web_search_result",
+        "url": "https://www.cbr.com/sylvester-stallone-action-heroes-shut-their-mouths/"
+      },
+      {
+        "encrypted_content": "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",
+        "page_age": "January 9, 2023",
+        "title": "Sylvester Stallone Wrote A 90-Page First Draft Of Rocky In Just Three Short Days - SlashFilm",
+        "type": "web_search_result",
+        "url": "https://www.slashfilm.com/1160687/sylvester-stallone-wrote-a-90-page-first-draft-of-rocky-in-just-three-short-days/"
+      },
+      {
+        "encrypted_content": "EoMWCioICRgCIiQzMzJlMjg1ZS0zNTUwLTRmMWUtYmE1ZS02NjM2M2I3ZmY0MGESDAuAaRe2ENjqMphNsBoMT70mIVkHfbB9ZXeiIjDf8jLkBXWKlQ9MJAvp7NEIX+rRa5cNpathfAhqrs9uL6mu1s7gRGc5mz4TQltySdUqhhXWR6gPcDTiDEyvqc11djJ7UfjwHZwfuCnEAz5zhqm7RhPT1GTkfiBoKIsO7OMFvOHXi9CpiYr5IUA7PkJNJYlnnsMxNXOVZYqWwwOCQxz7gQHQ5ZJq4UXs+o50g0Feip72Ik4OBYZtRPevot179xUnPfolZV8LC5Gl6tGi4bwOCi3Y8Qq3p/MdEin8DauU5IVlzGGt8zEd/6HXM5o6Cen3Ia14AP+PyKt5Gv/V4Sxwlv1NDoUslDrAoQpOjQ8mYDN/ho+QTb8qEw7S9JrWAtSuf6L4eSJ9dWSADoOI+g0OaXYzMYs/xIqy8tYJKCO0PB6jt83vB6wfIZ2RPdTVZX2elfrkUMciNnf4KomoYOhh+vULx90kUD9v3xjgbNryrWPnnKctTx2jts89BN7aoH8KzGUOT20e0zk38vjm7lcSZnqSTq53b6aCOTavjA7QmJ35SQymj3w5vssuO0iEXor3TWSXxhhfuIdoK8YDLUJJIBJUJjNzNvmWZJU8V3hsxuCEfvm09WNX/jMThvi6s6R+SrcphxzGdRe/E3wvTtgKPttIFVCcsZRXSpZtPIthU8K4GfR8FjAiq20I3/r7adeQc4fuULxrI7c/wleQBVt2SAZ2zD+Lk1U7ZyFuyAHWUnHvm3lKXYmnQY3IU2GhB7kvfj3SB7tZdKqNwcS/8cpsHVqP+EZ/4StU845KFJU+40C5DykttSGHVrlD3MnK2lh2yB690J2Nc9quTw3EbUh1ltUoJkp6FWFTE6Zf8Ifw7HtDgZYkMyEih9TrbYk9GLUGlPFIdg/cGZ51Io6UwDuV66qRoxhhaGa9lSf/gmWcX6p6fsxosC9cLl8+wieIR4OTArYK9P+PykrB9G5ElKUE6dj0/0DjMbzewFCKgcm92XiNRbvhVnxDicfEtVcYaXaprQZP9VspHVYCu1q4Riq5iUFegXfes2EQgJmGyd2O3H5fhvl/46K5OJlg37C0DJlhv/D3A1mHSNGCO+KwPyiLywAFpScnuLgzYDTV19SJ7UmCqm0R0V6x+6NoHujQ8q6VxSvVoHXU9MrFDfhPnsTKy9Ujy0EeS7iQTyU3g1YHjVDj0joEJ6M8yJVMf5vWLKmfRBgeXsMxClIvY+WDgMs2QrMNeKS534Xkd2msP6iWqw67Xido6tS/sfzKjLT+yQFuIes8NJmbMCmqP405+OX/LHEMNxaOHhUVKDLRLcI3CzjklaSwzd0wOwVnHy1ok7oPU+xlo/vE7xTR8QezMeaGWeWzzMqI4K410DNnmO4MvuCMQFpL7D32LljXH8AFUyEs+MCUXhwORDgXQiwsFV80MGULKuqTpBdsaUzNKIgre00rHgAoevDR2QJxX7dYEypxv0ihy+15qhiFfzLZDnLZi0cmCpAdU55rUK8s+k/mALALGmne/VdvauonieenNev9O0+wS98uWN4JhP2QSr7pp9t8r3QAWXU7ev9S91ffAT7vipCF/iUxjaYBNjhJI/ZFA9DXD+1qwcaaTeSWXKV5ykZUxij6cZ79AUd24d7K1ooFM3PVQ53xd9IDFnDKiVVK0iC6ILwNPnvFEWQdNXodVA3053GFpGHsuO5NksuT+ZSU48qJoO/CxT+4wLA3XH7eotU/buais/ErZ1pZwcFSSjjrgPGUulpVaGKpjPdvARAkA0Ix7thMkD7WofmTzAV4zseC6QXsbD38Tr96qQtdP+CNsfzP/vYgpTTGXd2T3Ts/wAQ3EqwnvTh66fi2p8AEFQ7Y+hXoi6tV8p3IBz4YVIS9hPfnjTM4iAukbd2D2b7jsOn8Ji0ZBkinwYApFdfpDT2U2wUOa15FbbiMz4uOoflKp/o4pP2gwVjdQafO1mAJaW1xl+5sxJzTCyV2S+L5d4BSGifRJAojJk5qAWz/FvHTbEMR9/i/gBcQKL5QKVSdPLsMUEWAAyXXqWg9YRLna7aGua4z1bkXN2tkG2GqbL/u4przjtjfHDKLD2UhCo6WrCEHj1wabPUFmlzuoad6W9Wil3mOWF0C/8H4nMDe9Retc4xrnFwEeji4kb+v3+C2UefJGV6l1cDHLu09ypzRZ2epqHwJPWv386fyPi6tKro6fNk5DuvBHTegAkM2W/tjzEw2k74v/gfgBHQOmJrlblGIz7dWx4Jr3ykEUjRCE5vSdoG4rMO1Oj86iuKpPIugoccdfoVTaPDRAghBNuZ7r5jA7JcbeCY6v+6LFYDuj1HjbFESChJBGizP04PM2VBojUcM9i6MZsZAEOtLoBrXX6jA1+TkG85a7+F0plF+JNFtwhLlPP5M73fimEDwoZ1N8vEhK7ZzfvZHu9d1UWyUpsOq3XDC6uMXUINJydA43nwGczdiC2ueAkyFYfxU+jho8kk+I2ygjTbB6qXaSo22HC+iS2rS2CtOJrNvaDG542AUbBWPUXKKmHgbPrt+aooAhf2yot0LldaUUCd5ESabPRRzY0rp/dTwgn3lf5qorcobX+juxr45bdwPk+irMhPdypcP9YfApVFpt1uFcjEijfvCsWMVyWvnCJdlOIM7SpSPH6mtUZfmgP50jZ2aL0YZgaCjpA55sh5gCc+czOsysOUzvlSF0SjrpkM8pWUtizmH0FcjWEbjLCms8w6CFR2LNH/yZdGeiWMiABcAgJ0BpaZEpUJ3xB4+0sXrOB0WwJ45xrtfCqMoWEKVkQ1nFYjxsBCNjpbuWFxUGV2pIO/GlC69US4eAelb7FDlMtPReppi/ibjQcSAI3Rb933MWNLWfdsZ/vXNk6qsT8atOiztMA2LmvTbptJUD38ZLw8+xeX5cuqZLcFcDb+h6VeQOgdXSneTHG9LDvGPJWkP4bzqTCiwDaKlpCzJa6OLanMJWNtGvCggXA4ZXN/HT0Z84Xx9e1XhFWk4TkMYmq9M42Hpvzl46zS1gY4gvgWp9umlAx5kFlikUjAbCN6OW2gsrU5B23ESKBGjdV1EPs65brBMjNT4vdGAx7zjwYOn03TgilrKI6vvgCQHgFJNJ+cFp1ubJDbR1QzlfNofAeS7YQ/LdrT5VXrCYZJydxRacbkksC266QDXsuN6jooLGbY/Paga5iOGilmEOaJnpljHIaaSiF6COKt/xvEZf9kqdV38nOLdSScObH0yQtw0iMzDcrbCrRQ7Y8wtfFpX7Qj1CReOSIC3Y1N/l25qDLG154f81QPaM0kNRiH09q8zV+N8rC2d7qvNFj3EWGR+ud6jfFiC3DOhuuMwuVuneVpfU8c58pzGhbdnR331CD4883ogp+qgYAj4KnzKLlb+VvJdTo2dNLF/RwtdZ2cby/FRAWc69sF6LYUwpol8K4m4jV1XvkeiC10Q4AK18ST9czOkuS9N3tZ4BL69IlP0vcoXDDGIvq9e39PWAUCQt+vREsooPfgMlTSbUbcvRFsxFWDVnZ9pTLnpkzbDkwdX1xIVX8QNp35xhnFg3CluWDZM49sKAHTosucQMMDLpPu5Xj9PBkrLiL2cBILo+Z8mvd+95UHo9fgIEDO2+ew6N3sRKpIs3xMK9fVKHtEVOsY3VyC0ddJZNiwurMmrnI7hzUaSr19OGsZ/8W06N0dBbg2vTvkMQsPd6BYFs6oYAw==",
+        "page_age": "May 29, 2021",
+        "title": "Sylvester Stallone Wrote the 'Rocky' Script in Only 3 Days",
+        "type": "web_search_result",
+        "url": "https://www.cheatsheet.com/entertainment/sylvester-stallone-wrote-the-rocky-script-in-only-3-days.html/"
+      },
+      {
+        "encrypted_content": "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",
+        "page_age": null,
+        "title": "ROCKY Written by Sylvester Stallone RING PRODUCTIONS, INC.",
+        "type": "web_search_result",
+        "url": "https://assets.scriptslug.com/live/pdf/scripts/rocky-1976.pdf"
+      },
+      {
+        "encrypted_content": "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",
+        "page_age": "October 13, 2022",
+        "title": "The insane story of how Sylvester Stallone made 'Rocky'",
+        "type": "web_search_result",
+        "url": "https://faroutmagazine.co.uk/insane-story-how-sylvester-stallone-made-rocky/"
+      },
+      {
+        "encrypted_content": "EugGCioICRgCIiQzMzJlMjg1ZS0zNTUwLTRmMWUtYmE1ZS02NjM2M2I3ZmY0MGESDKQ8S/lWR9qHIgg7khoM9xySaTGtzEDdCMnDIjBCCSKekUd8SKIYet9OUU2ldHi4qRLLzFsTmIgYDOfT6kxVFrsYBk3P82axmeUUGLwq6wV9mCSH70kbwIBzxdWAo6E8gwAB9Zb92aOPwELWBeyrDNBgPwAkk/6SIID3AgFOEtP77E/ZY6ZAEpNvHQsU9nxBjbdtddOYyDs35QSdSz8dENIX2L+VZym5K911rlv6qMI2nKj+zxcDiG58k1yaKgmj+b8spmza85oZFE/nKT3GRacOvYdvWaSXOxfuMl+tAwNr1sls7koFxZwcLDTEI+qxJaIUv1m/V2r+4tpQk6897e+4yxVk79Ntj2jx1s43HDqtuSf7dbmP+JcYxlCK+n0mcG09h7S4aCeEHoVAwq8st1QTF7UhVURH/1du22gOvAmG8lUVbc9hPUuDOTsBGBoa4QFvJRJ5K5hnMWOiSoTLeKH89mkwK4gLkbJstY6tnCs/TQ1RihXhJnWIDacpRVnqDWK67z+HznwzbVUzdFRWBfK86JiS+8SxZ2qFT54l4r+KV5ZRbqSY8Wzr5JzV22g4oPojT4TIVFy/dWlua7r56YCxSp1SFs079GYhI/6yvdLiGjVf8eWdtHcuP1mVGXmdsAhFeMoik1opV2OcZfbqE3LrTZejSGxatnWlujl7SLsGMjYaWO9fC8ZklLH1jXG62bCM9nSd8O8QXCIy7NU2f+Plht/RS4PuS8GMR/7xvrmksuVXLmrgnI8CEpwj+tf2mkU+7qrJsvd0fjzGkBVveUKDy/m2f57Lh5Zm+DJ6++e51sYkPclSaFW8+A3RjQbxvp9YGR6QR5gguBS8JPPJLSm4PzHFM+QsHkxHit8PfCbwSNtp5aWZP0b/+Qgry+REKtaeBtxwMh7/ALyCnbibB7MNoJx1N7FBnvYilRLI6K5VQ4EGFGLzPZorcAVAZgZ9SKxU8A6Zi8TiZU72FPNhQraRDuAHpDZ6sS9G0SHOFpoFkRQWrS3cRICpUpy2zr1m1iHDXWN9uvL8CihGEKrv2AsqqmydiBXWiBfqT9+/SYx+pUOrsUzy7LtJsGFd7mIaufR+YAbekAJc9t8YAw==",
+        "page_age": "August 25, 2018",
+        "title": "Writing his First Movie Script: Sylvester Stallone \u2013 Comma And",
+        "type": "web_search_result",
+        "url": "https://commaand.co/2018/08/25/writing-his-first-movie-script-sylvester-stallone/"
+      },
+      {
+        "encrypted_content": "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",
+        "page_age": "July 7, 2023",
+        "title": "Billy Oppenheimer on LinkedIn: In 1975, Sylvester Stallone wrote the screenplay for \"Rocky.\" He shopped\u2026 | 72 comments",
+        "type": "web_search_result",
+        "url": "https://www.linkedin.com/posts/billy-oppenheimer-70612782_in-1975-sylvester-stallone-wrote-the-screenplay-activity-7083104075055071233-rdxm"
+      },
+      {
+        "encrypted_content": "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",
+        "page_age": "May 27, 2025",
+        "title": "Sylvester Stallone starts filming \"Rocky\" | January 9, 1976 | HISTORY",
+        "type": "web_search_result",
+        "url": "https://www.history.com/this-day-in-history/stallone-starts-filming-rocky/"
+      }
+    ],
+    "tool_use_id": "srvtoolu_01MxKq3B1Q3mzhdZPh3hPE9s",
+    "type": "web_search_tool_result"
+  },
+  "index": 2,
+  "type": "content_block_start"
+}
+================================================================================
+
+================================================================================
+Event type: BetaContentBlockStopEvent
+Event data: {
+  "index": 2,
+  "type": "content_block_stop",
+  "content_block": {
+    "content": [
+      {
+        "encrypted_content": "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",
+        "page_age": "1 week ago",
+        "title": "Rocky - Wikipedia",
+        "type": "web_search_result",
+        "url": "https://en.wikipedia.org/wiki/Rocky"
+      },
+      {
+        "encrypted_content": "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",
+        "page_age": "May 8, 2025",
+        "title": "Sylvester Stallone and Rocky: How to Put Yourself into Your Scripts",
+        "type": "web_search_result",
+        "url": "https://blog.kinolime.com/articles/rocky-script-analysis"
+      },
+      {
+        "encrypted_content": "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",
+        "page_age": "September 17, 2023",
+        "title": "Sylvester Stallone Recalls Writing Rocky: 'Nobody Wanted to Make It'",
+        "type": "web_search_result",
+        "url": "https://www.cbr.com/sylvester-stallone-action-heroes-shut-their-mouths/"
+      },
+      {
+        "encrypted_content": "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",
+        "page_age": "January 9, 2023",
+        "title": "Sylvester Stallone Wrote A 90-Page First Draft Of Rocky In Just Three Short Days - SlashFilm",
+        "type": "web_search_result",
+        "url": "https://www.slashfilm.com/1160687/sylvester-stallone-wrote-a-90-page-first-draft-of-rocky-in-just-three-short-days/"
+      },
+      {
+        "encrypted_content": "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",
+        "page_age": "May 29, 2021",
+        "title": "Sylvester Stallone Wrote the 'Rocky' Script in Only 3 Days",
+        "type": "web_search_result",
+        "url": "https://www.cheatsheet.com/entertainment/sylvester-stallone-wrote-the-rocky-script-in-only-3-days.html/"
+      },
+      {
+        "encrypted_content": "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",
+        "page_age": null,
+        "title": "ROCKY Written by Sylvester Stallone RING PRODUCTIONS, INC.",
+        "type": "web_search_result",
+        "url": "https://assets.scriptslug.com/live/pdf/scripts/rocky-1976.pdf"
+      },
+      {
+        "encrypted_content": "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",
+        "page_age": "October 13, 2022",
+        "title": "The insane story of how Sylvester Stallone made 'Rocky'",
+        "type": "web_search_result",
+        "url": "https://faroutmagazine.co.uk/insane-story-how-sylvester-stallone-made-rocky/"
+      },
+      {
+        "encrypted_content": "EugGCioICRgCIiQzMzJlMjg1ZS0zNTUwLTRmMWUtYmE1ZS02NjM2M2I3ZmY0MGESDKQ8S/lWR9qHIgg7khoM9xySaTGtzEDdCMnDIjBCCSKekUd8SKIYet9OUU2ldHi4qRLLzFsTmIgYDOfT6kxVFrsYBk3P82axmeUUGLwq6wV9mCSH70kbwIBzxdWAo6E8gwAB9Zb92aOPwELWBeyrDNBgPwAkk/6SIID3AgFOEtP77E/ZY6ZAEpNvHQsU9nxBjbdtddOYyDs35QSdSz8dENIX2L+VZym5K911rlv6qMI2nKj+zxcDiG58k1yaKgmj+b8spmza85oZFE/nKT3GRacOvYdvWaSXOxfuMl+tAwNr1sls7koFxZwcLDTEI+qxJaIUv1m/V2r+4tpQk6897e+4yxVk79Ntj2jx1s43HDqtuSf7dbmP+JcYxlCK+n0mcG09h7S4aCeEHoVAwq8st1QTF7UhVURH/1du22gOvAmG8lUVbc9hPUuDOTsBGBoa4QFvJRJ5K5hnMWOiSoTLeKH89mkwK4gLkbJstY6tnCs/TQ1RihXhJnWIDacpRVnqDWK67z+HznwzbVUzdFRWBfK86JiS+8SxZ2qFT54l4r+KV5ZRbqSY8Wzr5JzV22g4oPojT4TIVFy/dWlua7r56YCxSp1SFs079GYhI/6yvdLiGjVf8eWdtHcuP1mVGXmdsAhFeMoik1opV2OcZfbqE3LrTZejSGxatnWlujl7SLsGMjYaWO9fC8ZklLH1jXG62bCM9nSd8O8QXCIy7NU2f+Plht/RS4PuS8GMR/7xvrmksuVXLmrgnI8CEpwj+tf2mkU+7qrJsvd0fjzGkBVveUKDy/m2f57Lh5Zm+DJ6++e51sYkPclSaFW8+A3RjQbxvp9YGR6QR5gguBS8JPPJLSm4PzHFM+QsHkxHit8PfCbwSNtp5aWZP0b/+Qgry+REKtaeBtxwMh7/ALyCnbibB7MNoJx1N7FBnvYilRLI6K5VQ4EGFGLzPZorcAVAZgZ9SKxU8A6Zi8TiZU72FPNhQraRDuAHpDZ6sS9G0SHOFpoFkRQWrS3cRICpUpy2zr1m1iHDXWN9uvL8CihGEKrv2AsqqmydiBXWiBfqT9+/SYx+pUOrsUzy7LtJsGFd7mIaufR+YAbekAJc9t8YAw==",
+        "page_age": "August 25, 2018",
+        "title": "Writing his First Movie Script: Sylvester Stallone \u2013 Comma And",
+        "type": "web_search_result",
+        "url": "https://commaand.co/2018/08/25/writing-his-first-movie-script-sylvester-stallone/"
+      },
+      {
+        "encrypted_content": "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",
+        "page_age": "July 7, 2023",
+        "title": "Billy Oppenheimer on LinkedIn: In 1975, Sylvester Stallone wrote the screenplay for \"Rocky.\" He shopped\u2026 | 72 comments",
+        "type": "web_search_result",
+        "url": "https://www.linkedin.com/posts/billy-oppenheimer-70612782_in-1975-sylvester-stallone-wrote-the-screenplay-activity-7083104075055071233-rdxm"
+      },
+      {
+        "encrypted_content": "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",
+        "page_age": "May 27, 2025",
+        "title": "Sylvester Stallone starts filming \"Rocky\" | January 9, 1976 | HISTORY",
+        "type": "web_search_result",
+        "url": "https://www.history.com/this-day-in-history/stallone-starts-filming-rocky/"
+      }
+    ],
+    "tool_use_id": "srvtoolu_01MxKq3B1Q3mzhdZPh3hPE9s",
+    "type": "web_search_tool_result"
+  }
+}
+================================================================================
+
+================================================================================
+Event type: BetaRawContentBlockStartEvent
+Event data: {
+  "content_block": {
+    "citations": null,
+    "text": "",
+    "type": "text"
+  },
+  "index": 3,
+  "type": "content_block_start"
+}
+================================================================================
+
+================================================================================
+Event type: BetaRawContentBlockDeltaEvent
+Event data: {
+  "delta": {
+    "text": "Yes",
+    "type": "text_delta"
+  },
+  "index": 3,
+  "type": "content_block_delta"
+}
+================================================================================
+
+================================================================================
+Event type: BetaTextEvent
+Event data: {
+  "type": "text",
+  "text": "Yes",
+  "snapshot": "Yes"
+}
+================================================================================
+
+================================================================================
+Event type: BetaRawContentBlockDeltaEvent
+Event data: {
+  "delta": {
+    "text": ", ",
+    "type": "text_delta"
+  },
+  "index": 3,
+  "type": "content_block_delta"
+}
+================================================================================
+
+================================================================================
+Event type: BetaTextEvent
+Event data: {
+  "type": "text",
+  "text": ", ",
+  "snapshot": "Yes, "
+}
+================================================================================
+
+================================================================================
+Event type: BetaContentBlockStopEvent
+Event data: {
+  "index": 3,
+  "type": "content_block_stop",
+  "content_block": {
+    "citations": null,
+    "text": "Yes, ",
+    "type": "text"
+  }
+}
+================================================================================
+
+================================================================================
+Event type: BetaRawContentBlockStartEvent
+Event data: {
+  "content_block": {
+    "citations": [],
+    "text": "",
+    "type": "text"
+  },
+  "index": 4,
+  "type": "content_block_start"
+}
+================================================================================
+
+================================================================================
+Event type: BetaRawContentBlockDeltaEvent
+Event data: {
+  "delta": {
+    "citation": {
+      "cited_text": "Sylvester Stallone wrote the screenplay for Rocky in three and a half days, shortly after watching the championship match between Muhammad Ali and Chu...",
+      "encrypted_index": "Eo8BCioICRgCIiQzMzJlMjg1ZS0zNTUwLTRmMWUtYmE1ZS02NjM2M2I3ZmY0MGESDAhwcl5YPAgUtxGm5hoMIEFP8kZsyW3DMr4ZIjAdTQDFZK7s8YNeg0cokVsed0nuOTdjgyn8DQagfzoatmKHy4M0mSdFZxq3I5SSl2IqExOwAKO9J4PLm97qcpOmUXa9mJcYBA==",
+      "title": "Rocky - Wikipedia",
+      "type": "web_search_result_location",
+      "url": "https://en.wikipedia.org/wiki/Rocky"
+    },
+    "type": "citations_delta"
+  },
+  "index": 4,
+  "type": "content_block_delta"
+}
+================================================================================
+
+================================================================================
+Event type: BetaCitationEvent
+Event data: {
+  "type": "citation",
+  "citation": {
+    "cited_text": "Sylvester Stallone wrote the screenplay for Rocky in three and a half days, shortly after watching the championship match between Muhammad Ali and Chu...",
+    "encrypted_index": "Eo8BCioICRgCIiQzMzJlMjg1ZS0zNTUwLTRmMWUtYmE1ZS02NjM2M2I3ZmY0MGESDAhwcl5YPAgUtxGm5hoMIEFP8kZsyW3DMr4ZIjAdTQDFZK7s8YNeg0cokVsed0nuOTdjgyn8DQagfzoatmKHy4M0mSdFZxq3I5SSl2IqExOwAKO9J4PLm97qcpOmUXa9mJcYBA==",
+    "title": "Rocky - Wikipedia",
+    "type": "web_search_result_location",
+    "url": "https://en.wikipedia.org/wiki/Rocky"
+  },
+  "snapshot": [
+    {
+      "cited_text": "Sylvester Stallone wrote the screenplay for Rocky in three and a half days, shortly after watching the championship match between Muhammad Ali and Chu...",
+      "encrypted_index": "Eo8BCioICRgCIiQzMzJlMjg1ZS0zNTUwLTRmMWUtYmE1ZS02NjM2M2I3ZmY0MGESDAhwcl5YPAgUtxGm5hoMIEFP8kZsyW3DMr4ZIjAdTQDFZK7s8YNeg0cokVsed0nuOTdjgyn8DQagfzoatmKHy4M0mSdFZxq3I5SSl2IqExOwAKO9J4PLm97qcpOmUXa9mJcYBA==",
+      "title": "Rocky - Wikipedia",
+      "type": "web_search_result_location",
+      "url": "https://en.wikipedia.org/wiki/Rocky"
+    }
+  ]
+}
+================================================================================
+
+================================================================================
+Event type: BetaRawContentBlockDeltaEvent
+Event data: {
+  "delta": {
+    "text": "Sylvester Stallone wrote",
+    "type": "text_delta"
+  },
+  "index": 4,
+  "type": "content_block_delta"
+}
+================================================================================
+
+================================================================================
+Event type: BetaTextEvent
+Event data: {
+  "type": "text",
+  "text": "Sylvester Stallone wrote",
+  "snapshot": "Sylvester Stallone wrote"
+}
+================================================================================
+
+================================================================================
+Event type: BetaRawContentBlockDeltaEvent
+Event data: {
+  "delta": {
+    "text": " the screenplay",
+    "type": "text_delta"
+  },
+  "index": 4,
+  "type": "content_block_delta"
+}
+================================================================================
+
+================================================================================
+Event type: BetaTextEvent
+Event data: {
+  "type": "text",
+  "text": " the screenplay",
+  "snapshot": "Sylvester Stallone wrote the screenplay"
+}
+================================================================================
+
+================================================================================
+Event type: BetaRawContentBlockDeltaEvent
+Event data: {
+  "delta": {
+    "text": " for Rocky in three",
+    "type": "text_delta"
+  },
+  "index": 4,
+  "type": "content_block_delta"
+}
+================================================================================
+
+================================================================================
+Event type: BetaTextEvent
+Event data: {
+  "type": "text",
+  "text": " for Rocky in three",
+  "snapshot": "Sylvester Stallone wrote the screenplay for Rocky in three"
+}
+================================================================================
+
+================================================================================
+Event type: BetaRawContentBlockDeltaEvent
+Event data: {
+  "delta": {
+    "text": " and a half days,",
+    "type": "text_delta"
+  },
+  "index": 4,
+  "type": "content_block_delta"
+}
+================================================================================
+
+================================================================================
+Event type: BetaTextEvent
+Event data: {
+  "type": "text",
+  "text": " and a half days,",
+  "snapshot": "Sylvester Stallone wrote the screenplay for Rocky in three and a half days,"
+}
+================================================================================
+
+================================================================================
+Event type: BetaRawContentBlockDeltaEvent
+Event data: {
+  "delta": {
+    "text": " shortly after watching",
+    "type": "text_delta"
+  },
+  "index": 4,
+  "type": "content_block_delta"
+}
+================================================================================
+
+================================================================================
+Event type: BetaTextEvent
+Event data: {
+  "type": "text",
+  "text": " shortly after watching",
+  "snapshot": "Sylvester Stallone wrote the screenplay for Rocky in three and a half days, shortly after watching"
+}
+================================================================================
+
+================================================================================
+Event type: BetaRawContentBlockDeltaEvent
+Event data: {
+  "delta": {
+    "text": " the championship match between Muhammad Ali and Chuck Wep",
+    "type": "text_delta"
+  },
+  "index": 4,
+  "type": "content_block_delta"
+}
+================================================================================
+
+================================================================================
+Event type: BetaTextEvent
+Event data: {
+  "type": "text",
+  "text": " the championship match between Muhammad Ali and Chuck Wep",
+  "snapshot": "Sylvester Stallone wrote the screenplay for Rocky in three and a half days, shortly after watching the championship match between Muhammad Ali and Chuck Wep"
+}
+================================================================================
+
+================================================================================
+Event type: BetaRawContentBlockDeltaEvent
+Event data: {
+  "delta": {
+    "text": "ner that took place on March 24",
+    "type": "text_delta"
+  },
+  "index": 4,
+  "type": "content_block_delta"
+}
+================================================================================
+
+================================================================================
+Event type: BetaTextEvent
+Event data: {
+  "type": "text",
+  "text": "ner that took place on March 24",
+  "snapshot": "Sylvester Stallone wrote the screenplay for Rocky in three and a half days, shortly after watching the championship match between Muhammad Ali and Chuck Wepner that took place on March 24"
+}
+================================================================================
+
+================================================================================
+Event type: BetaRawContentBlockDeltaEvent
+Event data: {
+  "delta": {
+    "text": ", 1975",
+    "type": "text_delta"
+  },
+  "index": 4,
+  "type": "content_block_delta"
+}
+================================================================================
+
+================================================================================
+Event type: BetaTextEvent
+Event data: {
+  "type": "text",
+  "text": ", 1975",
+  "snapshot": "Sylvester Stallone wrote the screenplay for Rocky in three and a half days, shortly after watching the championship match between Muhammad Ali and Chuck Wepner that took place on March 24, 1975"
+}
+================================================================================
+
+================================================================================
+Event type: BetaContentBlockStopEvent
+Event data: {
+  "index": 4,
+  "type": "content_block_stop",
+  "content_block": {
+    "citations": [
+      {
+        "cited_text": "Sylvester Stallone wrote the screenplay for Rocky in three and a half days, shortly after watching the championship match between Muhammad Ali and Chu...",
+        "encrypted_index": "Eo8BCioICRgCIiQzMzJlMjg1ZS0zNTUwLTRmMWUtYmE1ZS02NjM2M2I3ZmY0MGESDAhwcl5YPAgUtxGm5hoMIEFP8kZsyW3DMr4ZIjAdTQDFZK7s8YNeg0cokVsed0nuOTdjgyn8DQagfzoatmKHy4M0mSdFZxq3I5SSl2IqExOwAKO9J4PLm97qcpOmUXa9mJcYBA==",
+        "title": "Rocky - Wikipedia",
+        "type": "web_search_result_location",
+        "url": "https://en.wikipedia.org/wiki/Rocky"
+      }
+    ],
+    "text": "Sylvester Stallone wrote the screenplay for Rocky in three and a half days, shortly after watching the championship match between Muhammad Ali and Chuck Wepner that took place on March 24, 1975",
+    "type": "text"
+  }
+}
+================================================================================
+
+================================================================================
+Event type: BetaRawContentBlockStartEvent
+Event data: {
+  "content_block": {
+    "citations": null,
+    "text": "",
+    "type": "text"
+  },
+  "index": 5,
+  "type": "content_block_start"
+}
+================================================================================
+
+================================================================================
+Event type: BetaRawContentBlockDeltaEvent
+Event data: {
+  "delta": {
+    "text": ". \n\n",
+    "type": "text_delta"
+  },
+  "index": 5,
+  "type": "content_block_delta"
+}
+================================================================================
+
+================================================================================
+Event type: BetaTextEvent
+Event data: {
+  "type": "text",
+  "text": ". \n\n",
+  "snapshot": ". \n\n"
+}
+================================================================================
+
+================================================================================
+Event type: BetaContentBlockStopEvent
+Event data: {
+  "index": 5,
+  "type": "content_block_stop",
+  "content_block": {
+    "citations": null,
+    "text": ". \n\n",
+    "type": "text"
+  }
+}
+================================================================================
+
+================================================================================
+Event type: BetaRawContentBlockStartEvent
+Event data: {
+  "content_block": {
+    "citations": [],
+    "text": "",
+    "type": "text"
+  },
+  "index": 6,
+  "type": "content_block_start"
+}
+================================================================================
+
+================================================================================
+Event type: BetaRawContentBlockDeltaEvent
+Event data: {
+  "delta": {
+    "citation": {
+      "cited_text": "Rocky is a 1976 American independent sports drama film directed by John G. Avildsen and written by and starring Sylvester Stallone. ",
+      "encrypted_index": "EpABCioICRgCIiQzMzJlMjg1ZS0zNTUwLTRmMWUtYmE1ZS02NjM2M2I3ZmY0MGESDJ8T+z4cWkuHtohR2BoMeNz3SB8ODj+YCTS6IjAR8xwM1DUwMEALrRm7/HuA5AEa//WbiQGVMRRHDNs0/gwGzAcMAMzG8CD4QOjfSyEqFCsaCXc+SWSP6VweJ+IfstaoBqM9GAQ=",
+      "title": "Rocky - Wikipedia",
+      "type": "web_search_result_location",
+      "url": "https://en.wikipedia.org/wiki/Rocky"
+    },
+    "type": "citations_delta"
+  },
+  "index": 6,
+  "type": "content_block_delta"
+}
+================================================================================
+
+================================================================================
+Event type: BetaCitationEvent
+Event data: {
+  "type": "citation",
+  "citation": {
+    "cited_text": "Rocky is a 1976 American independent sports drama film directed by John G. Avildsen and written by and starring Sylvester Stallone. ",
+    "encrypted_index": "EpABCioICRgCIiQzMzJlMjg1ZS0zNTUwLTRmMWUtYmE1ZS02NjM2M2I3ZmY0MGESDJ8T+z4cWkuHtohR2BoMeNz3SB8ODj+YCTS6IjAR8xwM1DUwMEALrRm7/HuA5AEa//WbiQGVMRRHDNs0/gwGzAcMAMzG8CD4QOjfSyEqFCsaCXc+SWSP6VweJ+IfstaoBqM9GAQ=",
+    "title": "Rocky - Wikipedia",
+    "type": "web_search_result_location",
+    "url": "https://en.wikipedia.org/wiki/Rocky"
+  },
+  "snapshot": [
+    {
+      "cited_text": "Rocky is a 1976 American independent sports drama film directed by John G. Avildsen and written by and starring Sylvester Stallone. ",
+      "encrypted_index": "EpABCioICRgCIiQzMzJlMjg1ZS0zNTUwLTRmMWUtYmE1ZS02NjM2M2I3ZmY0MGESDJ8T+z4cWkuHtohR2BoMeNz3SB8ODj+YCTS6IjAR8xwM1DUwMEALrRm7/HuA5AEa//WbiQGVMRRHDNs0/gwGzAcMAMzG8CD4QOjfSyEqFCsaCXc+SWSP6VweJ+IfstaoBqM9GAQ=",
+      "title": "Rocky - Wikipedia",
+      "type": "web_search_result_location",
+      "url": "https://en.wikipedia.org/wiki/Rocky"
+    }
+  ]
+}
+================================================================================
+
+================================================================================
+Event type: BetaRawContentBlockDeltaEvent
+Event data: {
+  "delta": {
+    "text": "Rocky is a 1976 American",
+    "type": "text_delta"
+  },
+  "index": 6,
+  "type": "content_block_delta"
+}
+================================================================================
+
+================================================================================
+Event type: BetaTextEvent
+Event data: {
+  "type": "text",
+  "text": "Rocky is a 1976 American",
+  "snapshot": "Rocky is a 1976 American"
+}
+================================================================================
+
+================================================================================
+Event type: BetaRawContentBlockDeltaEvent
+Event data: {
+  "delta": {
+    "text": " independent sports",
+    "type": "text_delta"
+  },
+  "index": 6,
+  "type": "content_block_delta"
+}
+================================================================================
+
+================================================================================
+Event type: BetaTextEvent
+Event data: {
+  "type": "text",
+  "text": " independent sports",
+  "snapshot": "Rocky is a 1976 American independent sports"
+}
+================================================================================
+
+================================================================================
+Event type: BetaRawContentBlockDeltaEvent
+Event data: {
+  "delta": {
+    "text": " drama film directe",
+    "type": "text_delta"
+  },
+  "index": 6,
+  "type": "content_block_delta"
+}
+================================================================================
+
+================================================================================
+Event type: BetaTextEvent
+Event data: {
+  "type": "text",
+  "text": " drama film directe",
+  "snapshot": "Rocky is a 1976 American independent sports drama film directe"
+}
+================================================================================
+
+================================================================================
+Event type: BetaRawContentBlockDeltaEvent
+Event data: {
+  "delta": {
+    "text": "d by John G. Avildsen",
+    "type": "text_delta"
+  },
+  "index": 6,
+  "type": "content_block_delta"
+}
+================================================================================
+
+================================================================================
+Event type: BetaTextEvent
+Event data: {
+  "type": "text",
+  "text": "d by John G. Avildsen",
+  "snapshot": "Rocky is a 1976 American independent sports drama film directed by John G. Avildsen"
+}
+================================================================================
+
+================================================================================
+Event type: BetaRawContentBlockDeltaEvent
+Event data: {
+  "delta": {
+    "text": " and written",
+    "type": "text_delta"
+  },
+  "index": 6,
+  "type": "content_block_delta"
+}
+================================================================================
+
+================================================================================
+Event type: BetaTextEvent
+Event data: {
+  "type": "text",
+  "text": " and written",
+  "snapshot": "Rocky is a 1976 American independent sports drama film directed by John G. Avildsen and written"
+}
+================================================================================
+
+================================================================================
+Event type: BetaRawContentBlockDeltaEvent
+Event data: {
+  "delta": {
+    "text": " by and starring Sylvester Stallone",
+    "type": "text_delta"
+  },
+  "index": 6,
+  "type": "content_block_delta"
+}
+================================================================================
+
+================================================================================
+Event type: BetaTextEvent
+Event data: {
+  "type": "text",
+  "text": " by and starring Sylvester Stallone",
+  "snapshot": "Rocky is a 1976 American independent sports drama film directed by John G. Avildsen and written by and starring Sylvester Stallone"
+}
+================================================================================
+
+================================================================================
+Event type: BetaContentBlockStopEvent
+Event data: {
+  "index": 6,
+  "type": "content_block_stop",
+  "content_block": {
+    "citations": [
+      {
+        "cited_text": "Rocky is a 1976 American independent sports drama film directed by John G. Avildsen and written by and starring Sylvester Stallone. ",
+        "encrypted_index": "EpABCioICRgCIiQzMzJlMjg1ZS0zNTUwLTRmMWUtYmE1ZS02NjM2M2I3ZmY0MGESDJ8T+z4cWkuHtohR2BoMeNz3SB8ODj+YCTS6IjAR8xwM1DUwMEALrRm7/HuA5AEa//WbiQGVMRRHDNs0/gwGzAcMAMzG8CD4QOjfSyEqFCsaCXc+SWSP6VweJ+IfstaoBqM9GAQ=",
+        "title": "Rocky - Wikipedia",
+        "type": "web_search_result_location",
+        "url": "https://en.wikipedia.org/wiki/Rocky"
+      }
+    ],
+    "text": "Rocky is a 1976 American independent sports drama film directed by John G. Avildsen and written by and starring Sylvester Stallone",
+    "type": "text"
+  }
+}
+================================================================================
+
+================================================================================
+Event type: BetaRawContentBlockStartEvent
+Event data: {
+  "content_block": {
+    "citations": null,
+    "text": "",
+    "type": "text"
+  },
+  "index": 7,
+  "type": "content_block_start"
+}
+================================================================================
+
+================================================================================
+Event type: BetaRawContentBlockDeltaEvent
+Event data: {
+  "delta": {
+    "text": ". ",
+    "type": "text_delta"
+  },
+  "index": 7,
+  "type": "content_block_delta"
+}
+================================================================================
+
+================================================================================
+Event type: BetaTextEvent
+Event data: {
+  "type": "text",
+  "text": ". ",
+  "snapshot": ". "
+}
+================================================================================
+
+================================================================================
+Event type: BetaContentBlockStopEvent
+Event data: {
+  "index": 7,
+  "type": "content_block_stop",
+  "content_block": {
+    "citations": null,
+    "text": ". ",
+    "type": "text"
+  }
+}
+================================================================================
+
+================================================================================
+Event type: BetaRawContentBlockStartEvent
+Event data: {
+  "content_block": {
+    "citations": [],
+    "text": "",
+    "type": "text"
+  },
+  "index": 8,
+  "type": "content_block_start"
+}
+================================================================================
+
+================================================================================
+Event type: BetaRawContentBlockDeltaEvent
+Event data: {
+  "delta": {
+    "citation": {
+      "cited_text": "Additionally, the Directors Guild voted Rocky as the 65th best-directed film of all time, and in 2006, Sylvester Stallone's original screenplay for th...",
+      "encrypted_index": "Eo8BCioICRgCIiQzMzJlMjg1ZS0zNTUwLTRmMWUtYmE1ZS02NjM2M2I3ZmY0MGESDBtQQx5Wc9T0WGAZmxoMCciiiK8tx8HAWyXPIjCP5kDnaLkQDsP1bD+iiH2FFC9Qwj+RH5dppaZqf8Egasv1JLFEk2LO38tyMHLiEYsqE5w50kEmDPbZ25HdfPeUPpl9YZcYBA==",
+      "title": "Rocky - Wikipedia",
+      "type": "web_search_result_location",
+      "url": "https://en.wikipedia.org/wiki/Rocky"
+    },
+    "type": "citations_delta"
+  },
+  "index": 8,
+  "type": "content_block_delta"
+}
+================================================================================
+
+================================================================================
+Event type: BetaCitationEvent
+Event data: {
+  "type": "citation",
+  "citation": {
+    "cited_text": "Additionally, the Directors Guild voted Rocky as the 65th best-directed film of all time, and in 2006, Sylvester Stallone's original screenplay for th...",
+    "encrypted_index": "Eo8BCioICRgCIiQzMzJlMjg1ZS0zNTUwLTRmMWUtYmE1ZS02NjM2M2I3ZmY0MGESDBtQQx5Wc9T0WGAZmxoMCciiiK8tx8HAWyXPIjCP5kDnaLkQDsP1bD+iiH2FFC9Qwj+RH5dppaZqf8Egasv1JLFEk2LO38tyMHLiEYsqE5w50kEmDPbZ25HdfPeUPpl9YZcYBA==",
+    "title": "Rocky - Wikipedia",
+    "type": "web_search_result_location",
+    "url": "https://en.wikipedia.org/wiki/Rocky"
+  },
+  "snapshot": [
+    {
+      "cited_text": "Additionally, the Directors Guild voted Rocky as the 65th best-directed film of all time, and in 2006, Sylvester Stallone's original screenplay for th...",
+      "encrypted_index": "Eo8BCioICRgCIiQzMzJlMjg1ZS0zNTUwLTRmMWUtYmE1ZS02NjM2M2I3ZmY0MGESDBtQQx5Wc9T0WGAZmxoMCciiiK8tx8HAWyXPIjCP5kDnaLkQDsP1bD+iiH2FFC9Qwj+RH5dppaZqf8Egasv1JLFEk2LO38tyMHLiEYsqE5w50kEmDPbZ25HdfPeUPpl9YZcYBA==",
+      "title": "Rocky - Wikipedia",
+      "type": "web_search_result_location",
+      "url": "https://en.wikipedia.org/wiki/Rocky"
+    }
+  ]
+}
+================================================================================
+
+================================================================================
+Event type: BetaRawContentBlockDeltaEvent
+Event data: {
+  "delta": {
+    "text": "In ",
+    "type": "text_delta"
+  },
+  "index": 8,
+  "type": "content_block_delta"
+}
+================================================================================
+
+================================================================================
+Event type: BetaTextEvent
+Event data: {
+  "type": "text",
+  "text": "In ",
+  "snapshot": "In "
+}
+================================================================================
+
+================================================================================
+Event type: BetaRawContentBlockDeltaEvent
+Event data: {
+  "delta": {
+    "text": "2006, Syl",
+    "type": "text_delta"
+  },
+  "index": 8,
+  "type": "content_block_delta"
+}
+================================================================================
+
+================================================================================
+Event type: BetaTextEvent
+Event data: {
+  "type": "text",
+  "text": "2006, Syl",
+  "snapshot": "In 2006, Syl"
+}
+================================================================================
+
+================================================================================
+Event type: BetaRawContentBlockDeltaEvent
+Event data: {
+  "delta": {
+    "text": "vester Stallone's",
+    "type": "text_delta"
+  },
+  "index": 8,
+  "type": "content_block_delta"
+}
+================================================================================
+
+================================================================================
+Event type: BetaTextEvent
+Event data: {
+  "type": "text",
+  "text": "vester Stallone's",
+  "snapshot": "In 2006, Sylvester Stallone's"
+}
+================================================================================
+
+================================================================================
+Event type: BetaRawContentBlockDeltaEvent
+Event data: {
+  "delta": {
+    "text": " original screenplay for",
+    "type": "text_delta"
+  },
+  "index": 8,
+  "type": "content_block_delta"
+}
+================================================================================
+
+================================================================================
+Event type: BetaTextEvent
+Event data: {
+  "type": "text",
+  "text": " original screenplay for",
+  "snapshot": "In 2006, Sylvester Stallone's original screenplay for"
+}
+================================================================================
+
+================================================================================
+Event type: BetaRawContentBlockDeltaEvent
+Event data: {
+  "delta": {
+    "text": " the film was selecte",
+    "type": "text_delta"
+  },
+  "index": 8,
+  "type": "content_block_delta"
+}
+================================================================================
+
+================================================================================
+Event type: BetaTextEvent
+Event data: {
+  "type": "text",
+  "text": " the film was selecte",
+  "snapshot": "In 2006, Sylvester Stallone's original screenplay for the film was selecte"
+}
+================================================================================
+
+================================================================================
+Event type: BetaRawContentBlockDeltaEvent
+Event data: {
+  "delta": {
+    "text": "d by the Writers",
+    "type": "text_delta"
+  },
+  "index": 8,
+  "type": "content_block_delta"
+}
+================================================================================
+
+================================================================================
+Event type: BetaTextEvent
+Event data: {
+  "type": "text",
+  "text": "d by the Writers",
+  "snapshot": "In 2006, Sylvester Stallone's original screenplay for the film was selected by the Writers"
+}
+================================================================================
+
+================================================================================
+Event type: BetaRawContentBlockDeltaEvent
+Event data: {
+  "delta": {
+    "text": " Guild of America as",
+    "type": "text_delta"
+  },
+  "index": 8,
+  "type": "content_block_delta"
+}
+================================================================================
+
+================================================================================
+Event type: BetaTextEvent
+Event data: {
+  "type": "text",
+  "text": " Guild of America as",
+  "snapshot": "In 2006, Sylvester Stallone's original screenplay for the film was selected by the Writers Guild of America as"
+}
+================================================================================
+
+================================================================================
+Event type: BetaRawContentBlockDeltaEvent
+Event data: {
+  "delta": {
+    "text": " the ",
+    "type": "text_delta"
+  },
+  "index": 8,
+  "type": "content_block_delta"
+}
+================================================================================
+
+================================================================================
+Event type: BetaTextEvent
+Event data: {
+  "type": "text",
+  "text": " the ",
+  "snapshot": "In 2006, Sylvester Stallone's original screenplay for the film was selected by the Writers Guild of America as the "
+}
+================================================================================
+
+================================================================================
+Event type: BetaRawContentBlockDeltaEvent
+Event data: {
+  "delta": {
+    "text": "78",
+    "type": "text_delta"
+  },
+  "index": 8,
+  "type": "content_block_delta"
+}
+================================================================================
+
+================================================================================
+Event type: BetaTextEvent
+Event data: {
+  "type": "text",
+  "text": "78",
+  "snapshot": "In 2006, Sylvester Stallone's original screenplay for the film was selected by the Writers Guild of America as the 78"
+}
+================================================================================
+
+================================================================================
+Event type: BetaRawContentBlockDeltaEvent
+Event data: {
+  "delta": {
+    "text": "th best",
+    "type": "text_delta"
+  },
+  "index": 8,
+  "type": "content_block_delta"
+}
+================================================================================
+
+================================================================================
+Event type: BetaTextEvent
+Event data: {
+  "type": "text",
+  "text": "th best",
+  "snapshot": "In 2006, Sylvester Stallone's original screenplay for the film was selected by the Writers Guild of America as the 78th best"
+}
+================================================================================
+
+================================================================================
+Event type: BetaRawContentBlockDeltaEvent
+Event data: {
+  "delta": {
+    "text": " screenplay of all time",
+    "type": "text_delta"
+  },
+  "index": 8,
+  "type": "content_block_delta"
+}
+================================================================================
+
+================================================================================
+Event type: BetaTextEvent
+Event data: {
+  "type": "text",
+  "text": " screenplay of all time",
+  "snapshot": "In 2006, Sylvester Stallone's original screenplay for the film was selected by the Writers Guild of America as the 78th best screenplay of all time"
+}
+================================================================================
+
+================================================================================
+Event type: BetaContentBlockStopEvent
+Event data: {
+  "index": 8,
+  "type": "content_block_stop",
+  "content_block": {
+    "citations": [
+      {
+        "cited_text": "Additionally, the Directors Guild voted Rocky as the 65th best-directed film of all time, and in 2006, Sylvester Stallone's original screenplay for th...",
+        "encrypted_index": "Eo8BCioICRgCIiQzMzJlMjg1ZS0zNTUwLTRmMWUtYmE1ZS02NjM2M2I3ZmY0MGESDBtQQx5Wc9T0WGAZmxoMCciiiK8tx8HAWyXPIjCP5kDnaLkQDsP1bD+iiH2FFC9Qwj+RH5dppaZqf8Egasv1JLFEk2LO38tyMHLiEYsqE5w50kEmDPbZ25HdfPeUPpl9YZcYBA==",
+        "title": "Rocky - Wikipedia",
+        "type": "web_search_result_location",
+        "url": "https://en.wikipedia.org/wiki/Rocky"
+      }
+    ],
+    "text": "In 2006, Sylvester Stallone's original screenplay for the film was selected by the Writers Guild of America as the 78th best screenplay of all time",
+    "type": "text"
+  }
+}
+================================================================================
+
+================================================================================
+Event type: BetaRawContentBlockStartEvent
+Event data: {
+  "content_block": {
+    "citations": null,
+    "text": "",
+    "type": "text"
+  },
+  "index": 9,
+  "type": "content_block_start"
+}
+================================================================================
+
+================================================================================
+Event type: BetaRawContentBlockDeltaEvent
+Event data: {
+  "delta": {
+    "text": ".",
+    "type": "text_delta"
+  },
+  "index": 9,
+  "type": "content_block_delta"
+}
+================================================================================
+
+================================================================================
+Event type: BetaTextEvent
+Event data: {
+  "type": "text",
+  "text": ".",
+  "snapshot": "."
+}
+================================================================================
+
+================================================================================
+Event type: BetaContentBlockStopEvent
+Event data: {
+  "index": 9,
+  "type": "content_block_stop",
+  "content_block": {
+    "citations": null,
+    "text": ".",
+    "type": "text"
+  }
+}
+================================================================================
+
+================================================================================
+Event type: BetaRawMessageDeltaEvent
+Event data: {
+  "context_management": null,
+  "delta": {
+    "container": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null
+  },
+  "type": "message_delta",
+  "usage": {
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0,
+    "input_tokens": 17874,
+    "output_tokens": 256,
+    "server_tool_use": {
+      "web_fetch_requests": null,
+      "web_search_requests": 1
+    }
+  }
+}
+================================================================================
+
+================================================================================
+Event type: BetaMessageStopEvent
+Event data: {
+  "type": "message_stop",
+  "message": {
+    "id": "msg_01L3Gx4kiYqddTs3iN2uw7x7",
+    "container": null,
+    "content": [
+      {
+        "citations": null,
+        "text": "I'll search for information about whether Sylvester Stallone wrote the Rocky script.",
+        "type": "text"
+      },
+      {
+        "id": "srvtoolu_01MxKq3B1Q3mzhdZPh3hPE9s",
+        "input": {
+          "query": "Sylvester Stallone write Rocky script"
+        },
+        "name": "web_search",
+        "type": "server_tool_use"
+      },
+      {
+        "content": [
+          {
+            "encrypted_content": "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",
+            "page_age": "1 week ago",
+            "title": "Rocky - Wikipedia",
+            "type": "web_search_result",
+            "url": "https://en.wikipedia.org/wiki/Rocky"
+          },
+          {
+            "encrypted_content": "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",
+            "page_age": "May 8, 2025",
+            "title": "Sylvester Stallone and Rocky: How to Put Yourself into Your Scripts",
+            "type": "web_search_result",
+            "url": "https://blog.kinolime.com/articles/rocky-script-analysis"
+          },
+          {
+            "encrypted_content": "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",
+            "page_age": "September 17, 2023",
+            "title": "Sylvester Stallone Recalls Writing Rocky: 'Nobody Wanted to Make It'",
+            "type": "web_search_result",
+            "url": "https://www.cbr.com/sylvester-stallone-action-heroes-shut-their-mouths/"
+          },
+          {
+            "encrypted_content": "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",
+            "page_age": "January 9, 2023",
+            "title": "Sylvester Stallone Wrote A 90-Page First Draft Of Rocky In Just Three Short Days - SlashFilm",
+            "type": "web_search_result",
+            "url": "https://www.slashfilm.com/1160687/sylvester-stallone-wrote-a-90-page-first-draft-of-rocky-in-just-three-short-days/"
+          },
+          {
+            "encrypted_content": "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",
+            "page_age": "May 29, 2021",
+            "title": "Sylvester Stallone Wrote the 'Rocky' Script in Only 3 Days",
+            "type": "web_search_result",
+            "url": "https://www.cheatsheet.com/entertainment/sylvester-stallone-wrote-the-rocky-script-in-only-3-days.html/"
+          },
+          {
+            "encrypted_content": "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",
+            "page_age": null,
+            "title": "ROCKY Written by Sylvester Stallone RING PRODUCTIONS, INC.",
+            "type": "web_search_result",
+            "url": "https://assets.scriptslug.com/live/pdf/scripts/rocky-1976.pdf"
+          },
+          {
+            "encrypted_content": "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",
+            "page_age": "October 13, 2022",
+            "title": "The insane story of how Sylvester Stallone made 'Rocky'",
+            "type": "web_search_result",
+            "url": "https://faroutmagazine.co.uk/insane-story-how-sylvester-stallone-made-rocky/"
+          },
+          {
+            "encrypted_content": "EugGCioICRgCIiQzMzJlMjg1ZS0zNTUwLTRmMWUtYmE1ZS02NjM2M2I3ZmY0MGESDKQ8S/lWR9qHIgg7khoM9xySaTGtzEDdCMnDIjBCCSKekUd8SKIYet9OUU2ldHi4qRLLzFsTmIgYDOfT6kxVFrsYBk3P82axmeUUGLwq6wV9mCSH70kbwIBzxdWAo6E8gwAB9Zb92aOPwELWBeyrDNBgPwAkk/6SIID3AgFOEtP77E/ZY6ZAEpNvHQsU9nxBjbdtddOYyDs35QSdSz8dENIX2L+VZym5K911rlv6qMI2nKj+zxcDiG58k1yaKgmj+b8spmza85oZFE/nKT3GRacOvYdvWaSXOxfuMl+tAwNr1sls7koFxZwcLDTEI+qxJaIUv1m/V2r+4tpQk6897e+4yxVk79Ntj2jx1s43HDqtuSf7dbmP+JcYxlCK+n0mcG09h7S4aCeEHoVAwq8st1QTF7UhVURH/1du22gOvAmG8lUVbc9hPUuDOTsBGBoa4QFvJRJ5K5hnMWOiSoTLeKH89mkwK4gLkbJstY6tnCs/TQ1RihXhJnWIDacpRVnqDWK67z+HznwzbVUzdFRWBfK86JiS+8SxZ2qFT54l4r+KV5ZRbqSY8Wzr5JzV22g4oPojT4TIVFy/dWlua7r56YCxSp1SFs079GYhI/6yvdLiGjVf8eWdtHcuP1mVGXmdsAhFeMoik1opV2OcZfbqE3LrTZejSGxatnWlujl7SLsGMjYaWO9fC8ZklLH1jXG62bCM9nSd8O8QXCIy7NU2f+Plht/RS4PuS8GMR/7xvrmksuVXLmrgnI8CEpwj+tf2mkU+7qrJsvd0fjzGkBVveUKDy/m2f57Lh5Zm+DJ6++e51sYkPclSaFW8+A3RjQbxvp9YGR6QR5gguBS8JPPJLSm4PzHFM+QsHkxHit8PfCbwSNtp5aWZP0b/+Qgry+REKtaeBtxwMh7/ALyCnbibB7MNoJx1N7FBnvYilRLI6K5VQ4EGFGLzPZorcAVAZgZ9SKxU8A6Zi8TiZU72FPNhQraRDuAHpDZ6sS9G0SHOFpoFkRQWrS3cRICpUpy2zr1m1iHDXWN9uvL8CihGEKrv2AsqqmydiBXWiBfqT9+/SYx+pUOrsUzy7LtJsGFd7mIaufR+YAbekAJc9t8YAw==",
+            "page_age": "August 25, 2018",
+            "title": "Writing his First Movie Script: Sylvester Stallone \u2013 Comma And",
+            "type": "web_search_result",
+            "url": "https://commaand.co/2018/08/25/writing-his-first-movie-script-sylvester-stallone/"
+          },
+          {
+            "encrypted_content": "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",
+            "page_age": "July 7, 2023",
+            "title": "Billy Oppenheimer on LinkedIn: In 1975, Sylvester Stallone wrote the screenplay for \"Rocky.\" He shopped\u2026 | 72 comments",
+            "type": "web_search_result",
+            "url": "https://www.linkedin.com/posts/billy-oppenheimer-70612782_in-1975-sylvester-stallone-wrote-the-screenplay-activity-7083104075055071233-rdxm"
+          },
+          {
+            "encrypted_content": "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",
+            "page_age": "May 27, 2025",
+            "title": "Sylvester Stallone starts filming \"Rocky\" | January 9, 1976 | HISTORY",
+            "type": "web_search_result",
+            "url": "https://www.history.com/this-day-in-history/stallone-starts-filming-rocky/"
+          }
+        ],
+        "tool_use_id": "srvtoolu_01MxKq3B1Q3mzhdZPh3hPE9s",
+        "type": "web_search_tool_result"
+      },
+      {
+        "citations": null,
+        "text": "Yes, ",
+        "type": "text"
+      },
+      {
+        "citations": [
+          {
+            "cited_text": "Sylvester Stallone wrote the screenplay for Rocky in three and a half days, shortly after watching the championship match between Muhammad Ali and Chu...",
+            "encrypted_index": "Eo8BCioICRgCIiQzMzJlMjg1ZS0zNTUwLTRmMWUtYmE1ZS02NjM2M2I3ZmY0MGESDAhwcl5YPAgUtxGm5hoMIEFP8kZsyW3DMr4ZIjAdTQDFZK7s8YNeg0cokVsed0nuOTdjgyn8DQagfzoatmKHy4M0mSdFZxq3I5SSl2IqExOwAKO9J4PLm97qcpOmUXa9mJcYBA==",
+            "title": "Rocky - Wikipedia",
+            "type": "web_search_result_location",
+            "url": "https://en.wikipedia.org/wiki/Rocky"
+          }
+        ],
+        "text": "Sylvester Stallone wrote the screenplay for Rocky in three and a half days, shortly after watching the championship match between Muhammad Ali and Chuck Wepner that took place on March 24, 1975",
+        "type": "text"
+      },
+      {
+        "citations": null,
+        "text": ". \n\n",
+        "type": "text"
+      },
+      {
+        "citations": [
+          {
+            "cited_text": "Rocky is a 1976 American independent sports drama film directed by John G. Avildsen and written by and starring Sylvester Stallone. ",
+            "encrypted_index": "EpABCioICRgCIiQzMzJlMjg1ZS0zNTUwLTRmMWUtYmE1ZS02NjM2M2I3ZmY0MGESDJ8T+z4cWkuHtohR2BoMeNz3SB8ODj+YCTS6IjAR8xwM1DUwMEALrRm7/HuA5AEa//WbiQGVMRRHDNs0/gwGzAcMAMzG8CD4QOjfSyEqFCsaCXc+SWSP6VweJ+IfstaoBqM9GAQ=",
+            "title": "Rocky - Wikipedia",
+            "type": "web_search_result_location",
+            "url": "https://en.wikipedia.org/wiki/Rocky"
+          }
+        ],
+        "text": "Rocky is a 1976 American independent sports drama film directed by John G. Avildsen and written by and starring Sylvester Stallone",
+        "type": "text"
+      },
+      {
+        "citations": null,
+        "text": ". ",
+        "type": "text"
+      },
+      {
+        "citations": [
+          {
+            "cited_text": "Additionally, the Directors Guild voted Rocky as the 65th best-directed film of all time, and in 2006, Sylvester Stallone's original screenplay for th...",
+            "encrypted_index": "Eo8BCioICRgCIiQzMzJlMjg1ZS0zNTUwLTRmMWUtYmE1ZS02NjM2M2I3ZmY0MGESDBtQQx5Wc9T0WGAZmxoMCciiiK8tx8HAWyXPIjCP5kDnaLkQDsP1bD+iiH2FFC9Qwj+RH5dppaZqf8Egasv1JLFEk2LO38tyMHLiEYsqE5w50kEmDPbZ25HdfPeUPpl9YZcYBA==",
+            "title": "Rocky - Wikipedia",
+            "type": "web_search_result_location",
+            "url": "https://en.wikipedia.org/wiki/Rocky"
+          }
+        ],
+        "text": "In 2006, Sylvester Stallone's original screenplay for the film was selected by the Writers Guild of America as the 78th best screenplay of all time",
+        "type": "text"
+      },
+      {
+        "citations": null,
+        "text": ".",
+        "type": "text"
+      }
+    ],
+    "context_management": null,
+    "model": "claude-haiku-4-5-20251001",
+    "role": "assistant",
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "input_tokens": 17874,
+      "output_tokens": 256,
+      "server_tool_use": {
+        "web_fetch_requests": null,
+        "web_search_requests": 1
+      },
+      "service_tier": "standard"
+    }
+  }
+}
+================================================================================
+
