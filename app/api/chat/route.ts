@@ -82,7 +82,7 @@ export async function POST(req: Request) {
   const webSearchTool = anthropic.tools.webSearch_20250305();
 
   const result = streamText({
-    model: model,
+    model: anthropic(model),
     messages: convertToModelMessages(messagesWithSystem),
     maxOutputTokens: 16000,
     tools: webSearch ? {
