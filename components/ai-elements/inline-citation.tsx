@@ -69,10 +69,26 @@ export const InlineCitationCardTrigger = ({
       {...props}
     >
       {sources.length ? (
-        <>
-          {new URL(sources[0]).hostname}{" "}
-          {sources.length > 1 && `+${sources.length - 1}`}
-        </>
+        (() => {
+          const firstSource = sources[0];
+          try {
+            const url = new URL(firstSource);
+            return (
+              <>
+                {url.hostname}{" "}
+                {sources.length > 1 && `+${sources.length - 1}`}
+              </>
+            );
+          } catch {
+            // Not a valid URL, just display the text
+            return (
+              <>
+                {firstSource}
+                {sources.length > 1 && ` +${sources.length - 1}`}
+              </>
+            );
+          }
+        })()
       ) : (
         "unknown"
       )}
@@ -257,7 +273,14 @@ export const InlineCitationSource = ({
       <h4 className="truncate font-medium text-sm leading-tight">{title}</h4>
     )}
     {url && (
-      <p className="truncate break-all text-muted-foreground text-xs">{url}</p>
+      <a
+        href={url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="truncate break-all text-muted-foreground text-xs hover:text-foreground hover:underline block"
+      >
+        {url}
+      </a>
     )}
     {description && (
       <p className="line-clamp-3 text-muted-foreground text-sm leading-relaxed">

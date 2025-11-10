@@ -45,6 +45,19 @@ import {
 } from '@/components/ai-elements/reasoning';
 import { Loader } from '@/components/ai-elements/loader';
 import { Questionnaire, type QuestionnaireAnswers } from '@/components/questionnaire';
+import {
+  InlineCitation,
+  InlineCitationCard,
+  InlineCitationCardTrigger,
+  InlineCitationCardBody,
+  InlineCitationCarousel,
+  InlineCitationCarouselContent,
+  InlineCitationCarouselItem,
+  InlineCitationCarouselHeader,
+  InlineCitationCarouselIndex,
+  InlineCitationSource,
+  InlineCitationQuote,
+} from '@/components/ai-elements/inline-citation';
 
 const models = [
   {
@@ -139,51 +152,35 @@ const ChatBotDemo = () => {
             {messages.map((message) => {
               console.log('[FRONTEND] Rendering message with', message.parts.length, 'parts');
               console.log('[FRONTEND] Part types:', message.parts.map((p: any) => p.type));
-              const citationParts = message.parts.filter((p: any) => p.type === 'citation');
-              console.log('[FRONTEND] Citation parts found:', citationParts.length, citationParts);
-              
-              // Group contiguous text parts together, collecting citations
-              const groupedParts: Array<{ type: string; content: any; indices: number[]; citations?: any[] }> = [];
-              let currentTextGroup: { type: 'text'; content: string; indices: number[]; citations: any[] } | null = null;
-
-              message.parts.forEach((part: any, i) => {
-                if (part.type === 'text') {
-                  if (currentTextGroup) {
-                    currentTextGroup.content += part.text;
-                    currentTextGroup.indices.push(i);
-                  } else {
-                    currentTextGroup = { type: 'text', content: part.text, indices: [i], citations: [] };
-                  }
-                } else if (part.type === 'citation') {
-                  console.log('[FRONTEND] Found citation part:', part);
-                  // Add citation to the current text group
-                  if (currentTextGroup) {
-                    currentTextGroup.citations.push(part);
-                    console.log('[FRONTEND] Added to group, total citations:', currentTextGroup.citations.length);
-                  } else {
-                    console.log('[FRONTEND] Warning: citation without text group');
-                  }
-                } else {
-                  // Push the current text group if it exists
-                  if (currentTextGroup) {
-                    groupedParts.push(currentTextGroup);
-                    currentTextGroup = null;
-                  }
-                  // Add non-text part
-                  groupedParts.push({ type: part.type, content: part, indices: [i] });
-                }
-              });
-
-              // Don't forget to push the last text group if it exists
-              if (currentTextGroup) {
-                groupedParts.push(currentTextGroup);
-              }
-
-              console.log('[FRONTEND] Grouped parts:', groupedParts.length, 'groups');
-              console.log('[FRONTEND] Citations in groups:', groupedParts.map(g => g.citations?.length || 0));
 
               const isLastMessage = message.id === messages.at(-1)?.id;
               const allText = message.parts.filter(p => p.type === 'text').map(p => p.text).join('');
+
+              // Group parts into message blocks (text/citation sequences vs reasoning)
+              const messageBlocks: Array<{ type: 'content' | 'reasoning'; parts: any[] }> = [];
+              let currentContentBlock: any[] = [];
+
+              message.parts.forEach((part: any) => {
+                if (part.type === 'text' || part.type === 'citation') {
+                  currentContentBlock.push(part);
+                } else if (part.type === 'reasoning') {
+                  // If we have accumulated content, save it
+                  if (currentContentBlock.length > 0) {
+                    messageBlocks.push({ type: 'content', parts: currentContentBlock });
+                    currentContentBlock = [];
+                  }
+                  // Add reasoning as its own block
+                  messageBlocks.push({ type: 'reasoning', parts: [part] });
+                } else if (part.type !== 'source-url') {
+                  // For other non-source-url parts, add to current content block
+                  currentContentBlock.push(part);
+                }
+              });
+
+              // Don't forget remaining content
+              if (currentContentBlock.length > 0) {
+                messageBlocks.push({ type: 'content', parts: currentContentBlock });
+              }
 
               return (
                 <div key={message.id}>
@@ -207,32 +204,75 @@ const ChatBotDemo = () => {
                       ))}
                     </Sources>
                   )}
-                  {groupedParts.map((group, groupIdx) => {
-                    switch (group.type) {
-                      case 'text':
-                        // Format citations if they exist
-                        const citationText = group.citations && group.citations.length > 0
-                          ? ' ' + group.citations.map((citation: any) => 
-                              `([${citation.title}: ${citation.citedText}](${citation.url}))`
-                            ).join(' ')
-                          : '';
-                        
-                        const fullContent = group.content + citationText;
-                        
-                        if (group.citations && group.citations.length > 0) {
-                          console.log('[FRONTEND] Rendering text with citations:', group.citations.length, 'fullContent:', fullContent);
-                        }
-                        
+                  {(() => {
+                    // Track citation counter across all blocks in this message
+                    let citationCounter = 0;
+
+                    return messageBlocks.map((block, blockIdx) => {
+                      if (block.type === 'content') {
+                        // Check if this block has any citations
+                        const hasCitations = block.parts.some((p: any) => p.type === 'citation');
+
                         return (
-                          <Fragment key={`${message.id}-group-${groupIdx}`}>
+                          <Fragment key={`${message.id}-block-${blockIdx}`}>
                             <Message from={message.role}>
                               <MessageContent>
-                                <Response>
-                                  {fullContent}
-                                </Response>
+                                {hasCitations ? (
+                                  // Render inline with citations
+                                  <div className="prose prose-sm max-w-none">
+                                    {block.parts.map((part: any, partIdx: number) => {
+                                      if (part.type === 'text') {
+                                        return <Fragment key={`${message.id}-${blockIdx}-${partIdx}`}>{part.text}</Fragment>;
+                                      } else if (part.type === 'citation') {
+                                        citationCounter++;
+                                        const currentCitationNumber = citationCounter.toString();
+                                        console.log('[FRONTEND] Rendering inline citation:', part, 'number:', currentCitationNumber);
+                                        return (
+                                          <InlineCitation key={`${message.id}-${blockIdx}-${partIdx}`} className="gap-0">
+                                            <InlineCitationCard>
+                                              <InlineCitationCardTrigger
+                                                sources={[currentCitationNumber]}
+                                                className="px-1 py-0" style={{ background: "oklch(92.9% 0.013 255.508)" }} 
+                                              >
+                                                {currentCitationNumber}
+                                              </InlineCitationCardTrigger>
+                                              <InlineCitationCardBody>
+                                                <InlineCitationCarousel>
+                                                  <InlineCitationCarouselHeader>
+                                                    <InlineCitationCarouselIndex />
+                                                  </InlineCitationCarouselHeader>
+                                                  <InlineCitationCarouselContent>
+                                                    <InlineCitationCarouselItem>
+                                                      <InlineCitationSource
+                                                        title={part.title}
+                                                        url={part.url}
+                                                        description={part.description}
+                                                      />
+                                                      {part.citedText && (
+                                                        <InlineCitationQuote>
+                                                          {part.citedText}
+                                                        </InlineCitationQuote>
+                                                      )}
+                                                    </InlineCitationCarouselItem>
+                                                  </InlineCitationCarouselContent>
+                                                </InlineCitationCarousel>
+                                              </InlineCitationCardBody>
+                                            </InlineCitationCard>
+                                          </InlineCitation>
+                                        );
+                                      }
+                                      return null;
+                                    })}
+                                  </div>
+                                ) : (
+                                  // Use Response for markdown processing when no citations
+                                  <Response>
+                                    {block.parts.map((p: any) => p.text).join('')}
+                                  </Response>
+                                )}
                               </MessageContent>
                             </Message>
-                            {message.role === 'assistant' && isLastMessage && groupIdx === groupedParts.length - 1 && (
+                            {message.role === 'assistant' && isLastMessage && blockIdx === messageBlocks.length - 1 && (
                               <Actions className="mt-2">
                                 <Action
                                   onClick={() => regenerate()}
@@ -252,23 +292,23 @@ const ChatBotDemo = () => {
                             )}
                           </Fragment>
                         );
-                      case 'reasoning':
-                        const part = group.content;
-                        const isLastPart = groupIdx === groupedParts.length - 1;
+                      } else if (block.type === 'reasoning') {
+                        const part = block.parts[0];
+                        const isLastBlock = blockIdx === messageBlocks.length - 1;
                         return (
                           <Reasoning
-                            key={`${message.id}-group-${groupIdx}`}
+                            key={`${message.id}-block-${blockIdx}`}
                             className="w-full"
-                            isStreaming={status === 'streaming' && isLastPart && isLastMessage}
+                            isStreaming={status === 'streaming' && isLastBlock && isLastMessage}
                           >
                             <ReasoningTrigger />
                             <ReasoningContent>{part.text}</ReasoningContent>
                           </Reasoning>
                         );
-                      default:
-                        return null;
-                    }
-                  })}
+                      }
+                      return null;
+                    });
+                  })()}
                 </div>
               );
             })}
