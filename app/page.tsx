@@ -31,7 +31,19 @@ import { Action, Actions } from '@/components/ai-elements/actions';
 import { Fragment, useState, useEffect } from 'react';
 import { useChat } from '@ai-sdk/react';
 import { Response } from '@/components/ai-elements/response';
-import { CopyIcon, GlobeIcon, RefreshCcwIcon } from 'lucide-react';
+import { CopyIcon, GlobeIcon, RefreshCcwIcon, ClipboardListIcon } from 'lucide-react';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from '@/components/ui/dialog';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 import {
   Source,
   Sources,
@@ -44,7 +56,7 @@ import {
   ReasoningTrigger,
 } from '@/components/ai-elements/reasoning';
 import { Loader } from '@/components/ai-elements/loader';
-import { Questionnaire, type QuestionnaireAnswers } from '@/components/questionnaire';
+import { Questionnaire, type QuestionnaireAnswers, type QuestionnaireAnswer } from '@/components/questionnaire';
 import {
   InlineCitation,
   InlineCitationCard,
@@ -69,12 +81,46 @@ const models = [
 const QUESTIONNAIRE_STORAGE_KEY = 'questionnaire_completed';
 const QUESTIONNAIRE_ANSWERS_KEY = 'questionnaire_answers';
 
+const teamSizeOptions = ['1-5', '6-15', '15+'];
+
+const organizationTypeOptions = [
+  'Individual/sole proprietor',
+  'Fiscally sponsored project',
+  'SparkWell participant',
+  'Nonprofit (US)',
+  'Nonprofit (UK)',
+  'Nonprofit (other)',
+  'US 501(c)(3) charity',
+  'For-profit entity',
+  'Not yet registered/incorporated',
+];
+
+const QUESTION_TEXTS = {
+  question1: {
+    main: 'Where is your organization registered?',
+    subtitle: 'Optional: Do you have staff, funding, or operations elsewhere?',
+  },
+  question2: {
+    main: 'How many people work at your organization?',
+  },
+  question3: {
+    main: 'Which of these apply to you?',
+    subtitle: '(check all that apply)',
+  },
+};
+
 const ChatBotDemo = () => {
   const [showQuestionnaire, setShowQuestionnaire] = useState<boolean | null>(null);
   const [questionnaireAnswers, setQuestionnaireAnswers] = useState<QuestionnaireAnswers | null>(null);
   const [input, setInput] = useState('');
   const [model, setModel] = useState<string>(models[0].value);
   const [webSearch, setWebSearch] = useState(true);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [editAnswers, setEditAnswers] = useState<{
+    location?: string;
+    teamSize?: string;
+    organizationType?: string[];
+  }>({});
   const { messages, sendMessage, status, regenerate } = useChat();
 
   // Check if questionnaire has been completed
@@ -117,9 +163,9 @@ const ChatBotDemo = () => {
     const isFirstMessage = messages.length === 0;
 
     sendMessage(
-      { 
+      {
         text: message.text || 'Sent with attachments',
-        files: message.files 
+        files: message.files
       },
       {
         body: {
@@ -132,6 +178,56 @@ const ChatBotDemo = () => {
       },
     );
     setInput('');
+  };
+
+  const handleOpenEditModal = () => {
+    // Parse existing answers from questionnaireAnswers
+    const parsedAnswers: {
+      location?: string;
+      teamSize?: string;
+      organizationType?: string[];
+    } = {};
+
+    if (questionnaireAnswers?.answers) {
+      questionnaireAnswers.answers.forEach((answer) => {
+        if (answer.question.includes(QUESTION_TEXTS.question1.main)) {
+          parsedAnswers.location = answer.answer;
+        } else if (answer.question.includes(QUESTION_TEXTS.question2.main)) {
+          parsedAnswers.teamSize = answer.answer;
+        } else if (answer.question.includes(QUESTION_TEXTS.question3.main)) {
+          parsedAnswers.organizationType = answer.answer.split(', ').filter(Boolean);
+        }
+      });
+    }
+
+    setEditAnswers(parsedAnswers);
+    setShowEditModal(true);
+  };
+
+  const handleSaveAnswers = () => {
+    // Convert editAnswers to QuestionnaireAnswers format
+    const newAnswers: QuestionnaireAnswer[] = [];
+
+    if (editAnswers.location) {
+      const questionText = `${QUESTION_TEXTS.question1.main} ${QUESTION_TEXTS.question1.subtitle}`;
+      newAnswers.push({ question: questionText, answer: editAnswers.location });
+    }
+
+    if (editAnswers.teamSize) {
+      newAnswers.push({ question: QUESTION_TEXTS.question2.main, answer: editAnswers.teamSize });
+    }
+
+    if (editAnswers.organizationType && editAnswers.organizationType.length > 0) {
+      const questionText = `${QUESTION_TEXTS.question3.main} ${QUESTION_TEXTS.question3.subtitle}`;
+      newAnswers.push({ question: questionText, answer: editAnswers.organizationType.join(', ') });
+    }
+
+    // Save to localStorage and state
+    const answersObj = { answers: newAnswers };
+    localStorage.setItem(QUESTIONNAIRE_ANSWERS_KEY, JSON.stringify(answersObj));
+    localStorage.setItem(QUESTIONNAIRE_STORAGE_KEY, 'true');
+    setQuestionnaireAnswers(answersObj);
+    setShowEditModal(false);
   };
 
   // Show loading state while checking questionnaire status
@@ -342,6 +438,13 @@ const ChatBotDemo = () => {
                 <GlobeIcon size={16} />
                 <span>Search</span>
               </PromptInputButton>
+              <PromptInputButton
+                variant="ghost"
+                onClick={handleOpenEditModal}
+              >
+                <ClipboardListIcon size={16} />
+                <span>Context</span>
+              </PromptInputButton>
               <PromptInputModelSelect
                 onValueChange={(value) => {
                   setModel(value);
@@ -364,6 +467,105 @@ const ChatBotDemo = () => {
           </PromptInputFooter>
         </PromptInput>
       </div>
+
+      {/* Edit Questionnaire Modal */}
+      <Dialog open={showEditModal} onOpenChange={setShowEditModal}>
+        <DialogContent className="max-w-4xl max-h-[85vh] flex flex-col">
+          <DialogHeader>
+            <DialogTitle>Edit Organization Context</DialogTitle>
+          </DialogHeader>
+
+          <div className="space-y-8 py-4 overflow-y-auto flex-1 px-2">
+            {/* Question 1: Location */}
+            <div className="space-y-4 px-1">
+              <div className="text-base font-semibold leading-relaxed">{QUESTION_TEXTS.question1.main}</div>
+              <p className="text-sm text-muted-foreground leading-relaxed">{QUESTION_TEXTS.question1.subtitle}</p>
+              <Input
+                placeholder="e.g., California. Staff in US and UK"
+                value={editAnswers.location || ''}
+                onChange={(e) => {
+                  setEditAnswers({
+                    ...editAnswers,
+                    location: e.target.value,
+                  });
+                }}
+                className="h-12 text-base"
+              />
+            </div>
+
+            {/* Question 2: Team Size */}
+            <div className="space-y-4 px-1">
+              <div className="text-base font-semibold leading-relaxed">{QUESTION_TEXTS.question2.main}</div>
+              <RadioGroup
+                value={editAnswers.teamSize || ''}
+                onValueChange={(value) => setEditAnswers({ ...editAnswers, teamSize: value })}
+                className="space-y-3"
+              >
+                {teamSizeOptions.map((option) => (
+                  <label
+                    key={option}
+                    className={cn(
+                      'flex items-center gap-3 rounded-lg border p-4 cursor-pointer transition-colors',
+                      'hover:bg-accent',
+                      editAnswers.teamSize === option && 'border-primary bg-accent'
+                    )}
+                  >
+                    <RadioGroupItem value={option} id={`edit-${option}`} />
+                    <span className="text-base font-medium cursor-pointer flex-1">{option}</span>
+                  </label>
+                ))}
+              </RadioGroup>
+            </div>
+
+            {/* Question 3: Organization Type */}
+            <div className="space-y-4 px-1">
+              <div className="text-base font-semibold leading-relaxed">{QUESTION_TEXTS.question3.main}</div>
+              <p className="text-sm text-muted-foreground leading-relaxed">{QUESTION_TEXTS.question3.subtitle}</p>
+              <div className="space-y-3">
+                {organizationTypeOptions.map((option) => (
+                  <label
+                    key={option}
+                    className={cn(
+                      'flex items-center gap-3 rounded-lg border p-4 cursor-pointer transition-colors',
+                      'hover:bg-accent',
+                      editAnswers.organizationType?.includes(option) && 'border-primary bg-accent'
+                    )}
+                  >
+                    <Checkbox
+                      checked={editAnswers.organizationType?.includes(option) || false}
+                      onCheckedChange={(checked) => {
+                        const current = editAnswers.organizationType || [];
+                        if (checked) {
+                          setEditAnswers({
+                            ...editAnswers,
+                            organizationType: [...current, option],
+                          });
+                        } else {
+                          setEditAnswers({
+                            ...editAnswers,
+                            organizationType: current.filter((t) => t !== option),
+                          });
+                        }
+                      }}
+                      id={`edit-${option}`}
+                    />
+                    <span className="text-base font-medium cursor-pointer flex-1">{option}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <DialogFooter className="pt-4 border-t">
+            <Button variant="ghost" onClick={() => setShowEditModal(false)}>
+              Cancel
+            </Button>
+            <Button onClick={handleSaveAnswers}>
+              Save Changes
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
