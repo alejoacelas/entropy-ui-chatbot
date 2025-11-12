@@ -24,7 +24,7 @@ interface QuestionnaireProps {
 
 type Screen = 'landing' | 'question1' | 'question2' | 'question3' | 'complete';
 
-const teamSizeOptions = ['1-5', '6-15', '15+'];
+const teamSizeOptions = ['1 - Just me', '2-5', '6-15', '15+'];
 
 const organizationTypeOptions = [
   'Individual/sole proprietor',

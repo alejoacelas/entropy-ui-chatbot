@@ -81,7 +81,7 @@ const models = [
 const QUESTIONNAIRE_STORAGE_KEY = 'questionnaire_completed';
 const QUESTIONNAIRE_ANSWERS_KEY = 'questionnaire_answers';
 
-const teamSizeOptions = ['1-5', '6-15', '15+'];
+const teamSizeOptions = ['1 - Just me', '2-5', '6-15', '15+'];
 
 const organizationTypeOptions = [
   'Individual/sole proprietor',
