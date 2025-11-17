@@ -306,65 +306,65 @@ const ChatBotDemo = () => {
 
                     return messageBlocks.map((block, blockIdx) => {
                       if (block.type === 'content') {
-                        // Check if this block has any citations
-                        const hasCitations = block.parts.some((p: any) => p.type === 'citation');
+                        // Collect citations and build markdown text
+                        const citations: any[] = [];
+                        let markdownText = '';
+
+                        block.parts.forEach((part: any) => {
+                          if (part.type === 'text') {
+                            markdownText += part.text;
+                          } else if (part.type === 'citation') {
+                            citationCounter++;
+                            citations.push({ ...part, number: citationCounter });
+                            // Add inline citation as markdown link
+                            markdownText += `[[${citationCounter}]](${part.url})`;
+                          }
+                        });
 
                         return (
                           <Fragment key={`${message.id}-block-${blockIdx}`}>
                             <Message from={message.role}>
                               <MessageContent>
-                                {hasCitations ? (
-                                  // Render inline with citations
-                                  <div className="prose prose-sm max-w-none">
-                                    {block.parts.map((part: any, partIdx: number) => {
-                                      if (part.type === 'text') {
-                                        return <Fragment key={`${message.id}-${blockIdx}-${partIdx}`}>{part.text}</Fragment>;
-                                      } else if (part.type === 'citation') {
-                                        citationCounter++;
-                                        const currentCitationNumber = citationCounter.toString();
-                                        console.log('[FRONTEND] Rendering inline citation:', part, 'number:', currentCitationNumber);
-                                        return (
-                                          <InlineCitation key={`${message.id}-${blockIdx}-${partIdx}`} className="gap-0">
-                                            <InlineCitationCard>
-                                              <InlineCitationCardTrigger
-                                                sources={[currentCitationNumber]}
-                                                className="px-1 py-0" style={{ background: "oklch(92.9% 0.013 255.508)" }} 
-                                              >
-                                                {currentCitationNumber}
-                                              </InlineCitationCardTrigger>
-                                              <InlineCitationCardBody>
-                                                <InlineCitationCarousel>
-                                                  <InlineCitationCarouselHeader>
-                                                    <InlineCitationCarouselIndex />
-                                                  </InlineCitationCarouselHeader>
-                                                  <InlineCitationCarouselContent>
-                                                    <InlineCitationCarouselItem>
-                                                      <InlineCitationSource
-                                                        title={part.title}
-                                                        url={part.url}
-                                                        description={part.description}
-                                                      />
-                                                      {part.citedText && (
-                                                        <InlineCitationQuote>
-                                                          {part.citedText}
-                                                        </InlineCitationQuote>
-                                                      )}
-                                                    </InlineCitationCarouselItem>
-                                                  </InlineCitationCarouselContent>
-                                                </InlineCitationCarousel>
-                                              </InlineCitationCardBody>
-                                            </InlineCitationCard>
-                                          </InlineCitation>
-                                        );
-                                      }
-                                      return null;
-                                    })}
+                                <Response>{markdownText}</Response>
+
+                                {/* Render citations list at the end */}
+                                {citations.length > 0 && (
+                                  <div className="mt-4 space-y-2 border-t pt-4">
+                                    {citations.map((citation) => (
+                                      <InlineCitation key={`citation-${citation.number}`} className="gap-2">
+                                        <InlineCitationCard>
+                                          <InlineCitationCardTrigger
+                                            sources={[citation.number.toString()]}
+                                            className="px-1 py-0"
+                                            style={{ background: "oklch(92.9% 0.013 255.508)" }}
+                                          >
+                                            {citation.number}
+                                          </InlineCitationCardTrigger>
+                                          <InlineCitationCardBody>
+                                            <InlineCitationCarousel>
+                                              <InlineCitationCarouselHeader>
+                                                <InlineCitationCarouselIndex />
+                                              </InlineCitationCarouselHeader>
+                                              <InlineCitationCarouselContent>
+                                                <InlineCitationCarouselItem>
+                                                  <InlineCitationSource
+                                                    title={citation.title}
+                                                    url={citation.url}
+                                                    description={citation.description}
+                                                  />
+                                                  {citation.citedText && (
+                                                    <InlineCitationQuote>
+                                                      {citation.citedText}
+                                                    </InlineCitationQuote>
+                                                  )}
+                                                </InlineCitationCarouselItem>
+                                              </InlineCitationCarouselContent>
+                                            </InlineCitationCarousel>
+                                          </InlineCitationCardBody>
+                                        </InlineCitationCard>
+                                      </InlineCitation>
+                                    ))}
                                   </div>
-                                ) : (
-                                  // Use Response for markdown processing when no citations
-                                  <Response>
-                                    {block.parts.map((p: any) => p.text).join('')}
-                                  </Response>
                                 )}
                               </MessageContent>
                             </Message>
