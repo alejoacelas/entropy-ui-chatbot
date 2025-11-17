@@ -38,8 +38,8 @@ export async function POST(req: Request) {
   };
 
   // Wrap context messages with <user_context> tags
-  const wrapContextMessage = (question: string, answer: string): string => {
-    return `<user_context>${question}\n${answer}</user_context>`;
+  const wrapContextMessage = (content: string): string => {
+    return `<user_context>${content}</user_context>`;
   };
 
   // Build messages array: system prompt, then context messages, then user messages

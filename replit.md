@@ -4,10 +4,18 @@ This is an AI chatbot application built with Next.js 15 and React 19. The applic
 
 # Recent Changes
 
+**November 11, 2025** - Enhanced Citation Support & Bug Fixes
+- Added AI SDK patches (`/patches/`) for web search citation support from Anthropic
+  - `@ai-sdk/anthropic` patch: Handles `web_search_result_location` citation types
+  - `ai` SDK patch: Adds citation message parts to streaming schema
+- Added questionnaire component (`/components/questionnaire.tsx`) for collecting organizational context
+- Fixed deployment type error in `wrapContextMessage` function signature
+- Configured ANTHROPIC_API_KEY environment variable
+- Port 5000 confirmed working for both development and production
+
 **October 19, 2025** - Migrated from Vercel to Replit
 - Configured Next.js dev and production servers to bind to 0.0.0.0:5000 for Replit compatibility
 - Installed all npm dependencies
-- Configured AI_GATEWAY_API_KEY environment variable for AI functionality
 - Set up development workflow for automatic server restarts
 - Configured deployment settings for production publishing (autoscale)
 - Removed Turbopack flags for better stability in Replit environment
