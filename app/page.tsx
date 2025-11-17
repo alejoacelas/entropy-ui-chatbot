@@ -317,7 +317,7 @@ const ChatBotDemo = () => {
                             citationCounter++;
                             citations.push({ ...part, number: citationCounter });
                             // Add inline citation as markdown link
-                            markdownText += `[[${citationCounter}]](${part.url})`;
+                            markdownText += `[<sup>${citationCounter}</sup>](${part.url})`;
                           }
                         });
 
