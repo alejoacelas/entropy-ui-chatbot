@@ -1,0 +1,253 @@
+================================================
+FILE: backend/src/storage/FileSystemStorage.ts
+================================================
+import { promises as fs } from 'fs';
+import path from 'path';
+import { IStorage } from './IStorage.js';
+
+export class FileSystemStorage implements IStorage {
+  private baseDir: string;
+
+  constructor(baseDir: string = '.') {
+    this.baseDir = baseDir;
+  }
+
+  private getFullPath(key: string): string {
+    return path.join(this.baseDir, key);
+  }
+
+  async save(key: string, data: any): Promise<void> {
+    const fullPath = this.getFullPath(key);
+    const dir = path.dirname(fullPath);
+    
+    await fs.mkdir(dir, { recursive: true });
+    await fs.writeFile(fullPath, JSON.stringify(data, null, 2), 'utf-8');
+  }
+
+  async load<T>(key: string): Promise<T | null> {
+    try {
+      const fullPath = this.getFullPath(key);
+      const content = await fs.readFile(fullPath, 'utf-8');
+      return JSON.parse(content) as T;
+    } catch (error: any) {
+      if (error.code === 'ENOENT') {
+        return null;
+      }
+      throw error;
+    }
+  }
+
+  async list(prefix: string): Promise<string[]> {
+    try {
+      const fullPath = this.getFullPath(prefix);
+      const entries = await fs.readdir(fullPath);
+      return entries;
+    } catch (error: any) {
+      if (error.code === 'ENOENT') {
+        return [];
+      }
+      throw error;
+    }
+  }
+
+  async delete(key: string): Promise<void> {
+    try {
+      const fullPath = this.getFullPath(key);
+      await fs.unlink(fullPath);
+    } catch (error: any) {
+      if (error.code === 'ENOENT') {
+        return;
+      }
+      throw error;
+    }
+  }
+
+  async exists(key: string): Promise<boolean> {
+    try {
+      const fullPath = this.getFullPath(key);
+      await fs.access(fullPath);
+      return true;
+    } catch {
+      return false;
+    }
+  }
+}
+
+
+
+================================================
+FILE: backend/src/storage/index.ts
+================================================
+export type { IStorage } from './IStorage.js';
+export { FileSystemStorage } from './FileSystemStorage.js';
+export { ObjectStorage } from './ObjectStorage.js';
+export { StorageFactory } from './StorageFactory.js';
+
+
+
+================================================
+FILE: backend/src/storage/IStorage.ts
+================================================
+export interface IStorage {
+  save(key: string, data: any): Promise<void>;
+  
+  load<T>(key: string): Promise<T | null>;
+  
+  list(prefix: string): Promise<string[]>;
+  
+  delete(key: string): Promise<void>;
+  
+  exists(key: string): Promise<boolean>;
+}
+
+
+
+================================================
+FILE: backend/src/storage/ObjectStorage.ts
+================================================
+import { Storage } from '@google-cloud/storage';
+import { IStorage } from './IStorage.js';
+
+const REPLIT_SIDECAR_ENDPOINT = 'http://127.0.0.1:1106';
+
+export class ObjectStorage implements IStorage {
+  private storage: Storage;
+  private bucketName: string;
+
+  constructor(bucketName: string) {
+    this.bucketName = bucketName;
+    
+    this.storage = new Storage({
+      credentials: {
+        audience: 'replit',
+        subject_token_type: 'access_token',
+        token_url: `${REPLIT_SIDECAR_ENDPOINT}/token`,
+        type: 'external_account',
+        credential_source: {
+          url: `${REPLIT_SIDECAR_ENDPOINT}/credential`,
+          format: {
+            type: 'json',
+            subject_token_field_name: 'access_token',
+          },
+        },
+        universe_domain: 'googleapis.com',
+      },
+      projectId: '',
+    });
+  }
+
+  async save(key: string, data: any): Promise<void> {
+    const bucket = this.storage.bucket(this.bucketName);
+    const file = bucket.file(key);
+    
+    await file.save(JSON.stringify(data, null, 2), {
+      contentType: 'application/json',
+      metadata: {
+        cacheControl: 'no-cache',
+      },
+    });
+  }
+
+  async load<T>(key: string): Promise<T | null> {
+    try {
+      const bucket = this.storage.bucket(this.bucketName);
+      const file = bucket.file(key);
+      
+      const [exists] = await file.exists();
+      if (!exists) {
+        return null;
+      }
+      
+      const [contents] = await file.download();
+      return JSON.parse(contents.toString('utf-8')) as T;
+    } catch (error) {
+      console.error(`Error loading ${key}:`, error);
+      return null;
+    }
+  }
+
+  async list(prefix: string): Promise<string[]> {
+    try {
+      const bucket = this.storage.bucket(this.bucketName);
+      const [files] = await bucket.getFiles({ prefix });
+      
+      return files.map(file => {
+        const name = file.name;
+        if (name.startsWith(prefix)) {
+          return name.substring(prefix.length);
+        }
+        return name;
+      }).filter(name => name.length > 0 && !name.includes('/'));
+    } catch (error) {
+      console.error(`Error listing ${prefix}:`, error);
+      return [];
+    }
+  }
+
+  async delete(key: string): Promise<void> {
+    try {
+      const bucket = this.storage.bucket(this.bucketName);
+      const file = bucket.file(key);
+      await file.delete();
+    } catch (error) {
+      console.error(`Error deleting ${key}:`, error);
+    }
+  }
+
+  async exists(key: string): Promise<boolean> {
+    try {
+      const bucket = this.storage.bucket(this.bucketName);
+      const file = bucket.file(key);
+      const [exists] = await file.exists();
+      return exists;
+    } catch {
+      return false;
+    }
+  }
+}
+
+
+
+================================================
+FILE: backend/src/storage/StorageFactory.ts
+================================================
+import { IStorage } from './IStorage.js';
+import { FileSystemStorage } from './FileSystemStorage.js';
+import { ObjectStorage } from './ObjectStorage.js';
+
+export class StorageFactory {
+  private static instance: IStorage | null = null;
+
+  static getStorage(): IStorage {
+    if (this.instance) {
+      return this.instance;
+    }
+
+    const isProduction = process.env.REPLIT_DEPLOYMENT === '1';
+    
+    if (isProduction) {
+      const bucketName = process.env.STORAGE_BUCKET_NAME;
+      
+      if (!bucketName) {
+        throw new Error(
+          'STORAGE_BUCKET_NAME environment variable is required for production deployment. ' +
+          'Please create a bucket in the Object Storage tool and set this variable.'
+        );
+      }
+      
+      console.log(`Using Replit Object Storage (bucket: ${bucketName})`);
+      this.instance = new ObjectStorage(bucketName);
+    } else {
+      console.log('Using local file system storage');
+      this.instance = new FileSystemStorage('.');
+    }
+
+    return this.instance;
+  }
+
+  static resetInstance(): void {
+    this.instance = null;
+  }
+}
+
+

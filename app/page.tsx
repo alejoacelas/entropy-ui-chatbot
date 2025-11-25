@@ -31,7 +31,7 @@ import { Action, Actions } from '@/components/ai-elements/actions';
 import { Fragment, useState, useEffect } from 'react';
 import { useChat } from '@ai-sdk/react';
 import { Response } from '@/components/ai-elements/response';
-import { CopyIcon, GlobeIcon, RefreshCcwIcon, ClipboardListIcon } from 'lucide-react';
+import { CopyIcon, GlobeIcon, RefreshCcwIcon, ClipboardListIcon, ThumbsUpIcon, ThumbsDownIcon } from 'lucide-react';
 import {
   Dialog,
   DialogContent,
@@ -43,6 +43,8 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { Switch } from '@/components/ui/switch';
+import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
 import { cn } from '@/lib/utils';
 import {
   Source,
@@ -115,6 +117,7 @@ const ChatBotDemo = () => {
   const [input, setInput] = useState('');
   const [model, setModel] = useState<string>(models[0].value);
   const [webSearch, setWebSearch] = useState(true);
+  const [logConversations, setLogConversations] = useState(true);
   const [showEditModal, setShowEditModal] = useState(false);
   const [editAnswers, setEditAnswers] = useState<{
     location?: string;
@@ -462,6 +465,20 @@ const ChatBotDemo = () => {
                   ))}
                 </PromptInputModelSelectContent>
               </PromptInputModelSelect>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm text-muted-foreground">Log conversations</span>
+                    <Switch
+                      checked={logConversations}
+                      onCheckedChange={setLogConversations}
+                    />
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent side="top">
+                  <p>Logged conversations will be manually reviewed to improve Aerin</p>
+                </TooltipContent>
+              </Tooltip>
             </PromptInputTools>
             <PromptInputSubmit disabled={!input && !status} status={status} />
           </PromptInputFooter>
