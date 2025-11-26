@@ -17,11 +17,6 @@ import {
   PromptInputBody,
   PromptInputButton,
   type PromptInputMessage,
-  PromptInputModelSelect,
-  PromptInputModelSelectContent,
-  PromptInputModelSelectItem,
-  PromptInputModelSelectTrigger,
-  PromptInputModelSelectValue,
   PromptInputSubmit,
   PromptInputTextarea,
   PromptInputFooter,
@@ -31,7 +26,7 @@ import { Action, Actions } from '@/components/ai-elements/actions';
 import { Fragment, useState, useEffect } from 'react';
 import { useChat } from '@ai-sdk/react';
 import { Response } from '@/components/ai-elements/response';
-import { CopyIcon, GlobeIcon, RefreshCcwIcon, ClipboardListIcon, ThumbsUpIcon, ThumbsDownIcon } from 'lucide-react';
+import { CopyIcon, GlobeIcon, RefreshCcwIcon, ClipboardListIcon, ThumbsUpIcon, ThumbsDownIcon, SettingsIcon } from 'lucide-react';
 import {
   Dialog,
   DialogContent,
@@ -43,8 +38,17 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Switch } from '@/components/ui/switch';
 import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
 import {
   Source,
@@ -59,6 +63,7 @@ import {
 } from '@/components/ai-elements/reasoning';
 import { Loader } from '@/components/ai-elements/loader';
 import { Questionnaire, type QuestionnaireAnswers, type QuestionnaireAnswer } from '@/components/questionnaire';
+import { PrivacyNotice } from '@/components/privacy-notice';
 import {
   InlineCitation,
   InlineCitationCard,
@@ -80,6 +85,7 @@ const models = [
   },
 ];
 
+const PRIVACY_NOTICE_STORAGE_KEY = 'privacy_notice_accepted';
 const QUESTIONNAIRE_STORAGE_KEY = 'questionnaire_completed';
 const QUESTIONNAIRE_ANSWERS_KEY = 'questionnaire_answers';
 
@@ -112,6 +118,7 @@ const QUESTION_TEXTS = {
 };
 
 const ChatBotDemo = () => {
+  const [showPrivacyNotice, setShowPrivacyNotice] = useState<boolean | null>(null);
   const [showQuestionnaire, setShowQuestionnaire] = useState<boolean | null>(null);
   const [questionnaireAnswers, setQuestionnaireAnswers] = useState<QuestionnaireAnswers | null>(null);
   const [input, setInput] = useState('');
@@ -126,21 +133,31 @@ const ChatBotDemo = () => {
   }>({});
   const { messages, sendMessage, status, regenerate } = useChat();
 
-  // Check if questionnaire has been completed
+  // Check if privacy notice and questionnaire have been completed
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const completed = localStorage.getItem(QUESTIONNAIRE_STORAGE_KEY);
-      const answers = localStorage.getItem(QUESTIONNAIRE_ANSWERS_KEY);
-      setShowQuestionnaire(completed !== 'true');
-      if (answers) {
-        try {
-          setQuestionnaireAnswers(JSON.parse(answers));
-        } catch {
-          // Ignore parse errors
-        }
+    const privacyAccepted = localStorage.getItem(PRIVACY_NOTICE_STORAGE_KEY);
+    const questionnaireCompleted = localStorage.getItem(QUESTIONNAIRE_STORAGE_KEY);
+    const answers = localStorage.getItem(QUESTIONNAIRE_ANSWERS_KEY);
+
+    console.log('[DEBUG] Privacy accepted:', privacyAccepted);
+    console.log('[DEBUG] Questionnaire completed:', questionnaireCompleted);
+
+    setShowPrivacyNotice(privacyAccepted !== 'true');
+    setShowQuestionnaire(questionnaireCompleted !== 'true');
+
+    if (answers) {
+      try {
+        setQuestionnaireAnswers(JSON.parse(answers));
+      } catch {
+        // Ignore parse errors
       }
     }
   }, []);
+
+  const handlePrivacyNoticeAccept = () => {
+    localStorage.setItem(PRIVACY_NOTICE_STORAGE_KEY, 'true');
+    setShowPrivacyNotice(false);
+  };
 
   const handleQuestionnaireComplete = (answers: QuestionnaireAnswers) => {
     localStorage.setItem(QUESTIONNAIRE_STORAGE_KEY, 'true');
@@ -233,9 +250,21 @@ const ChatBotDemo = () => {
     setShowEditModal(false);
   };
 
-  // Show loading state while checking questionnaire status
-  if (showQuestionnaire === null) {
-    return null;
+  // Show loading state while checking privacy notice and questionnaire status
+  if (showPrivacyNotice === null || showQuestionnaire === null) {
+    console.log('[DEBUG] Loading... Privacy:', showPrivacyNotice, 'Questionnaire:', showQuestionnaire);
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="text-lg">Loading...</div>
+      </div>
+    );
+  }
+
+  console.log('[DEBUG] Render state - Privacy:', showPrivacyNotice, 'Questionnaire:', showQuestionnaire);
+
+  // Show privacy notice first if not accepted
+  if (showPrivacyNotice) {
+    return <PrivacyNotice onAccept={handlePrivacyNoticeAccept} />;
   }
 
   // Show questionnaire if not completed
@@ -466,37 +495,45 @@ const ChatBotDemo = () => {
                 <ClipboardListIcon size={16} />
                 <span>Context</span>
               </PromptInputButton>
-              <PromptInputModelSelect
-                onValueChange={(value) => {
-                  setModel(value);
-                }}
-                value={model}
-              >
-                <PromptInputModelSelectTrigger>
-                  <PromptInputModelSelectValue />
-                </PromptInputModelSelectTrigger>
-                <PromptInputModelSelectContent>
-                  {models.map((model) => (
-                    <PromptInputModelSelectItem key={model.value} value={model.value}>
-                      {model.name}
-                    </PromptInputModelSelectItem>
-                  ))}
-                </PromptInputModelSelectContent>
-              </PromptInputModelSelect>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm text-muted-foreground">Log conversations</span>
-                    <Switch
-                      checked={logConversations}
-                      onCheckedChange={setLogConversations}
-                    />
-                  </div>
-                </TooltipTrigger>
-                <TooltipContent side="top">
-                  <p>Logged conversations will be manually reviewed to improve Aerin</p>
-                </TooltipContent>
-              </Tooltip>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <PromptInputButton variant="ghost">
+                    <SettingsIcon size={16} />
+                    <span>Config</span>
+                  </PromptInputButton>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56">
+                  <DropdownMenuLabel>Model</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuRadioGroup value={model} onValueChange={setModel}>
+                    {models.map((modelOption) => (
+                      <DropdownMenuRadioItem key={modelOption.value} value={modelOption.value}>
+                        {modelOption.name}
+                      </DropdownMenuRadioItem>
+                    ))}
+                  </DropdownMenuRadioGroup>
+                  <DropdownMenuSeparator />
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <div>
+                        <DropdownMenuCheckboxItem
+                          checked={logConversations}
+                          onCheckedChange={setLogConversations}
+                        >
+                          Log conversations
+                        </DropdownMenuCheckboxItem>
+                      </div>
+                    </TooltipTrigger>
+                    <TooltipContent side="right">
+                      <p>
+                        Logged conversations will be manually reviewed
+                        <br />
+                        to improve Aerin. Disable by clicking here.
+                      </p>
+                    </TooltipContent>
+                  </Tooltip>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </PromptInputTools>
             <PromptInputSubmit disabled={!input && !status} status={status} />
           </PromptInputFooter>

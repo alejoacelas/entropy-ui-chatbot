@@ -42,3 +42,6 @@ exposeLocalhost = true
 deploymentTarget = "autoscale"
 run = ["npm", "run", "start"]
 build = ["npm", "run", "build"]
+
+[objectStorage]
+defaultBucketID = "replit-objstore-baca845c-9886-4c41-80ea-45cef475a75b"
