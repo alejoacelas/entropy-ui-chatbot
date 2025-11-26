@@ -3,7 +3,7 @@ import { loadConversation, deleteConversation } from '@/lib/conversation-storage
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const userId = req.headers.get('x-user-id');
@@ -15,7 +15,7 @@ export async function GET(
       );
     }
 
-    const conversationId = params.id;
+    const { id: conversationId } = await params;
 
     // Validate UUID format
     const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -48,7 +48,7 @@ export async function GET(
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const userId = req.headers.get('x-user-id');
@@ -60,7 +60,7 @@ export async function DELETE(
       );
     }
 
-    const conversationId = params.id;
+    const { id: conversationId } = await params;
 
     // Validate UUID format
     const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
