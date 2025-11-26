@@ -77,6 +77,9 @@ import {
   InlineCitationSource,
   InlineCitationQuote,
 } from '@/components/ai-elements/inline-citation';
+import { ConversationHistorySidebar } from '@/components/conversation-history-sidebar';
+import { SidebarTrigger } from '@/components/ui/sidebar';
+import { getUserId } from '@/lib/user-id';
 
 const models = [
   {
@@ -131,7 +134,36 @@ const ChatBotDemo = () => {
     teamSize?: string;
     organizationType?: string[];
   }>({});
-  const { messages, sendMessage, status, regenerate } = useChat();
+  const [currentConversationId, setCurrentConversationId] = useState<string | null>(null);
+  const [isLoadingConversation, setIsLoadingConversation] = useState(false);
+
+  const { messages, sendMessage, status, regenerate, setMessages } = useChat({
+    onFinish: async (message) => {
+      // Auto-save after assistant responds
+      if (logConversations) {
+        try {
+          const userId = getUserId();
+          if (!userId) return;
+
+          const response = await fetch('/api/conversations/save', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              conversationId: currentConversationId,
+              messages: [...messages, message],
+              contextMessages: questionnaireAnswers?.answers,
+              userId,
+            }),
+          });
+          const { conversationId: newId } = await response.json();
+          setCurrentConversationId(newId);
+        } catch (error) {
+          console.error('Failed to save conversation:', error);
+          // Don't disrupt chat flow on save error
+        }
+      }
+    },
+  });
 
   // Check if privacy notice and questionnaire have been completed
   useEffect(() => {
@@ -250,6 +282,94 @@ const ChatBotDemo = () => {
     setShowEditModal(false);
   };
 
+  // Conversation management functions
+  async function loadConversation(id: string) {
+    setIsLoadingConversation(true);
+    try {
+      const userId = getUserId();
+      if (!userId) return;
+
+      const response = await fetch(`/api/conversations/${id}`, {
+        headers: { 'x-user-id': userId },
+      });
+
+      if (!response.ok) {
+        console.error('Failed to load conversation');
+        return;
+      }
+
+      const { conversation } = await response.json();
+
+      setCurrentConversationId(id);
+      setMessages(conversation.messages);
+      setInput('');
+    } catch (error) {
+      console.error('Failed to load conversation:', error);
+    } finally {
+      setIsLoadingConversation(false);
+    }
+  }
+
+  function startNewConversation() {
+    setCurrentConversationId(null);
+    setMessages([]);
+    setInput('');
+  }
+
+  async function deleteConversation(id: string) {
+    if (!confirm('Delete this conversation? This cannot be undone.')) {
+      return;
+    }
+
+    try {
+      const userId = getUserId();
+      if (!userId) return;
+
+      const response = await fetch(`/api/conversations/${id}`, {
+        method: 'DELETE',
+        headers: { 'x-user-id': userId },
+      });
+
+      if (!response.ok) {
+        console.error('Failed to delete conversation');
+        return;
+      }
+
+      // If we deleted the current conversation, start a new one
+      if (id === currentConversationId) {
+        startNewConversation();
+      }
+    } catch (error) {
+      console.error('Failed to delete conversation:', error);
+    }
+  }
+
+  async function clearAllConversations() {
+    if (!confirm('Delete all conversations? This cannot be undone.')) {
+      return;
+    }
+
+    try {
+      const userId = getUserId();
+      if (!userId) return;
+
+      const response = await fetch('/api/conversations/clear-all', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId }),
+      });
+
+      if (!response.ok) {
+        console.error('Failed to clear conversations');
+        return;
+      }
+
+      startNewConversation();
+    } catch (error) {
+      console.error('Failed to clear conversations:', error);
+    }
+  }
+
   // Show loading state while checking privacy notice and questionnaire status
   if (showPrivacyNotice === null || showQuestionnaire === null) {
     console.log('[DEBUG] Loading... Privacy:', showPrivacyNotice, 'Questionnaire:', showQuestionnaire);
@@ -273,8 +393,21 @@ const ChatBotDemo = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-6 relative size-full h-screen">
-      <div className="flex flex-col h-full">
+    <>
+      <ConversationHistorySidebar
+        currentConversationId={currentConversationId}
+        onSelectConversation={loadConversation}
+        onNewConversation={startNewConversation}
+        onDeleteConversation={deleteConversation}
+        onClearAll={clearAllConversations}
+      />
+      <div className="flex-1 flex flex-col h-screen">
+        <div className="flex items-center gap-3 px-4 py-3 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+          <SidebarTrigger />
+          <h1 className="text-lg font-semibold">Aerin AI Assistant</h1>
+        </div>
+        <div className="max-w-4xl mx-auto p-6 relative size-full h-full flex-1 overflow-hidden">
+          <div className="flex flex-col h-full">
         <Conversation className="h-full">
           <ConversationContent>
             {messages.map((message) => {
@@ -638,7 +771,9 @@ const ChatBotDemo = () => {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-    </div>
+        </div>
+      </div>
+    </>
   );
 };
 

@@ -1,4 +1,4 @@
-export type { IStorage } from './IStorage.js';
-export { FileSystemStorage } from './FileSystemStorage.js';
-export { ObjectStorage } from './ObjectStorage.js';
-export { StorageFactory } from './StorageFactory.js';
+export type { IStorage } from './IStorage';
+export { FileSystemStorage } from './FileSystemStorage';
+export { ObjectStorage } from './ObjectStorage';
+export { StorageFactory } from './StorageFactory';

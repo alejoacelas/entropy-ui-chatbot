@@ -1,6 +1,6 @@
-import { IStorage } from './IStorage.js';
-import { FileSystemStorage } from './FileSystemStorage.js';
-import { ObjectStorage } from './ObjectStorage.js';
+import { IStorage } from './IStorage';
+import { FileSystemStorage } from './FileSystemStorage';
+import { ObjectStorage } from './ObjectStorage';
 
 export class StorageFactory {
   private static instance: IStorage | null = null;
