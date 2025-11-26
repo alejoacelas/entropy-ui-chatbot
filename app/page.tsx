@@ -136,6 +136,7 @@ const ChatBotDemo = () => {
   }>({});
   const [currentConversationId, setCurrentConversationId] = useState<string | null>(null);
   const [isLoadingConversation, setIsLoadingConversation] = useState(false);
+  const [sidebarRefreshKey, setSidebarRefreshKey] = useState(0);
 
   // Use ref to avoid stale closure in onFinish callback
   const conversationIdRef = useRef<string | null>(null);
@@ -177,6 +178,9 @@ const ChatBotDemo = () => {
           console.log('Conversation saved:', data.conversationId);
           conversationIdRef.current = data.conversationId;
           setCurrentConversationId(data.conversationId);
+
+          // Trigger sidebar refresh
+          setSidebarRefreshKey(prev => prev + 1);
         } catch (error) {
           console.error('Failed to save conversation:', error);
           // Don't disrupt chat flow on save error
@@ -414,6 +418,7 @@ const ChatBotDemo = () => {
         onNewConversation={startNewConversation}
         onDeleteConversation={deleteConversation}
         onClearAll={clearAllConversations}
+        refreshKey={sidebarRefreshKey}
       />
       <div className="flex-1 flex flex-col h-screen">
         <div className="flex items-center gap-3 px-4 py-3 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">

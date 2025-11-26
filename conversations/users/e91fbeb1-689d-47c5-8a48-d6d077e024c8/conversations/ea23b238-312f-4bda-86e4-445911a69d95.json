@@ -1,0 +1,149 @@
+{
+  "metadata": {
+    "id": "ea23b238-312f-4bda-86e4-445911a69d95",
+    "userId": "e91fbeb1-689d-47c5-8a48-d6d077e024c8",
+    "title": "test 2",
+    "createdAt": 1764121627295,
+    "updatedAt": 1764121716168,
+    "messageCount": 8,
+    "previewText": "test 2"
+  },
+  "messages": [
+    {
+      "parts": [
+        {
+          "type": "text",
+          "text": "test 2"
+        }
+      ],
+      "id": "cW55cUHNz4N0TBqN",
+      "role": "user"
+    },
+    {
+      "id": "90QlN8ChsgC6IVTi",
+      "role": "assistant",
+      "parts": [
+        {
+          "type": "step-start"
+        },
+        {
+          "type": "reasoning",
+          "text": "The user has sent \"test 2\" which appears to be a test message without a substantive question. This doesn't require any action-oriented response or web search. I should acknowledge it briefly and perhaps offer to help them with any actual questions they might have.\n\nGiven the guidance to be ruthlessly concise and action-oriented, I should keep this very short and simply indicate I'm ready to help with their actual operations questions.",
+          "providerMetadata": {
+            "anthropic": {
+              "signature": "Et0ECkYIChgCKkDW2sXgxGN+XXxGXHCZqPceEdEnrO1yHkOpqUAZCvKJ9pfcCkAlie6o1R0f68hVb+DgUYPv7rSNi1J655YDIyOiEgxrDYifCgKPjVIXiMUaDKLPi20V3fUk8Zm4XCIw6vl/yOjW3p+Oj2d5VI1B8aMGhjTQubRUJNe6vHwfhVV7a8P1xgDOiFCfbMNj/9zoKsQDj+a8+M8QycrHJL/w1X2jJs/a1eHFzMZPFlt/sGwurP9fnYRokha9R2ern8wpjk7oNyrLrRpStfgw9FYjG74FP8V6jTZmDpDGk/+fJR2Vc0ckFELiUGkU2XwAdP6Zb7RMsQ3IiTmI90x1EWeXkezOGB8bMqewbOtu8J3c13+JGXB9XQZ1pDRLIP78UI+pckasE/zNU4nfnpu0EQJc5JxqHLsIKFPmBststqYPKMT8VLCFTB5IMGRwvOufYINDmhQmI/eaGNJQrgweM1VPPT8lSLZaZjJ4D6HLr8b9UVYxZj7nAgIrlMore30smqFCURmGA3+Qk8uceRZkT/EZEXXGeekBRKcqBGU1huPcx4bXqq0pBgMijOaMQrM6CS83bbNFgzQqF49wk3fZ70w9N98Xr/yLAmkBfB//YrytrTio1pnvFnT7QEhhxNJ2TZV11x1x4QoGRDsLQlVHZJXupmtO+ELDaYU7xBDQ46/hhJJ4d18DEu6N02WbCdheEnq+DLl5QX/hfYDKTFwTy6uVkAb67aKNXOP77Zc+JkHbJS0T93ccWh12oM0mT6xOI4WpvMOQJ5yS3+GEGWUR7AuBiIB7uKxjPIAYAQ=="
+            }
+          },
+          "state": "done"
+        },
+        {
+          "type": "text",
+          "text": "I'm ready to help! What operations, compliance, or HR question can I assist you with today?",
+          "state": "done"
+        }
+      ]
+    },
+    {
+      "parts": [
+        {
+          "type": "text",
+          "text": "continuation of test 2"
+        }
+      ],
+      "id": "Ca34k57pPjDlfCNe",
+      "role": "user"
+    },
+    {
+      "id": "jMyzlKyqc6TeounA",
+      "role": "assistant",
+      "parts": [
+        {
+          "type": "step-start"
+        },
+        {
+          "type": "reasoning",
+          "text": "The user is sending what appears to be a test message - \"continuation of test 2\". This doesn't contain an actual question or request for help. They might be:\n1. Testing if the system is working\n2. Testing if I remember context from a previous conversation\n3. Accidentally sent this message\n\nSince there's no actual question or action they need help with, I should acknowledge their message and invite them to ask their actual question. I should be brief and helpful, staying in character as an operations assistant for small organizations.",
+          "providerMetadata": {
+            "anthropic": {
+              "signature": "EsAFCkYIChgCKkBjf2cfURKNj12RoSVLYwfStnM8E7C0wSVtXcpP5KQbO/HJlct6RSTUcQYEhn0vCAG4pufCRgziRbtG80dCQfAqEgxxOyouqebibg2D+PUaDCeHaXki6yTan0pDkSIw/xbBWzdHnPEoqLii4uk9zWgUs4R/axfcCKp12Tjvoqdi1eZ5vDjotTfGhKCjqbsPKqcEBegaxKzJ4jsiZmNo+ngYIYMZQ+KDUZOUhgygxOjxXlzuxrbuwJE4z5GpQV4nEUkqgUr9U9QNIrGzdZxVN49s9EQNzD6ASRvuIFiBlt8FE93a5Aeb1o7yU/N0ExXJVOjhb33uljfaF5Yo0J6XSXsY1ZInvaTpEZWpTFUProf41L/olbQKAB5ePdnQc5B6I8b8q2ZanLB+5Jnnrg16hdB0IriC28AhUFI9KLv/av0PEEGXvXRSOsR300MQeaL5h7EeYt/TAvNkYl9U+30ytjK1mPzlhzcG2E/e3mIDOF3a7uZFmXOhUi6KobFNsd8JnIrSXcb/Un5xbjcPxeFT9oOhEkAEGMRhpL/eGekoSEcZcb20TQTRU3oiKwDXzExG0SzRZkU6DWd08XUmqhKkDqmviSsbgia/TYIAMHZezx/MR7EjtdIZJZvIarHjjmJkhLjAo7jhFGsai+fEphP5xYY4EisopB70L0hH2TPik3HDUUSCNXZiFBkEaQpFgIyb+m1hgnHOKVc9pT4uExuvttsw3Af8ctRn2QJQCxEfmwFUv4xWRkiv7wySSbjIlRm3ChaGcV8+sspptfBy4+sj+zs5My+nl6PlPZwYAXAaI0HzxDMr5llgkc8Bi8bP0sd1AXKZDBiZjnKl2blrAHf24WngraFsAOXaW8bIIaOkrO+Cw7cs07zy35rtY2sHMZGuvrFoDuLJT87P9T50nY81HwGRAKtDIWrFQWMYAQ=="
+            }
+          },
+          "state": "done"
+        },
+        {
+          "type": "text",
+          "text": "I'm here and ready to help with your operations questions! What do you need assistance with?",
+          "state": "done"
+        }
+      ]
+    },
+    {
+      "parts": [
+        {
+          "type": "text",
+          "text": "last check on test 2"
+        }
+      ],
+      "id": "H2XoHsSFOHW90A8o",
+      "role": "user"
+    },
+    {
+      "id": "2bcjCXPwIAz03OHQ",
+      "role": "assistant",
+      "parts": [
+        {
+          "type": "step-start"
+        },
+        {
+          "type": "reasoning",
+          "text": "The user seems to be testing the system with these messages. They're not asking a real question about operations, compliance, HR, or any organizational matters. I should acknowledge their message and remain ready to help when they have an actual question.\n\nI'll give a brief, friendly response indicating I'm ready to assist with real questions.",
+          "providerMetadata": {
+            "anthropic": {
+              "signature": "EoAECkYIChgCKkDj/QLQrTLw282HD6R5wMJYrC0LZIERKNsoV31dtr7oYUlStNekYRPBmQjQuZw3MpLNdOf3dM7Tm8RJzIsUxiH7EgzzmqMQjFGOQzXyW0YaDPBCD6Dh/I5Jxg4AKyIwfF2Foq6w7HalEeQ0ngbrutjxP9yVRicnCCinSLYR8ksI/POSf0JPhGhNePL2LubeKucCBx8xpQoRgmRlEc2axgfTmvfSkNAPrpYKixAr6Ffr9Kk0nkTUiMO/hGxxnXpU/ahrEdCB0GmrP04l73dYB1eBS5o9djEw+yZaRAp8wVzCfzt9prX/8/6TVvjynkDeBYhvgyb7pkCxaUTG2QiWr1YSxX9qANG6f4d4IAkeHnkoFAIVznL788wDZcxPrXDMkqs2FombW9uOm7O+b7dC4lCOK1cTlaHKVmXUv7cYsY9F3/enW+UkTDAjeNDWpiN9u26LYqVJ6bGcHG8WZlu+5QGbhhH3CH/sWrdHhdDlvcb1UF6OFd26mytD8g2sc0Dzzd58uqdXdkE/MmDkJQ+857Av/dpi5b2DhFqU90ehhYXQBlNu1dStZYZtghDfqMsfMXHrPwrPVVrzcQh0ue31ZgIySP8hw6HHRPVRDDOOEipo0wYoRJK/TFJv9TdoZBjCSO33JgtZU6EbsZbsw/nrFpk65Ym/AOaj/6MYAQ=="
+            }
+          },
+          "state": "done"
+        },
+        {
+          "type": "text",
+          "text": "All good here! I'm ready whenever you have an actual operations, compliance, or HR question to work through.",
+          "state": "done"
+        }
+      ]
+    },
+    {
+      "parts": [
+        {
+          "type": "text",
+          "text": "still working after deletion?"
+        }
+      ],
+      "id": "RtAkU46DH0FJeUdO",
+      "role": "user"
+    },
+    {
+      "id": "2NuOoY8d3LegmmYp",
+      "role": "assistant",
+      "parts": [
+        {
+          "type": "step-start"
+        },
+        {
+          "type": "reasoning",
+          "text": "The user is asking \"still working after deletion?\" which seems to be a test message to check if the system is still functioning after some kind of deletion (perhaps of previous context or messages). \n\nThis is clearly still a test message and not an actual operations, compliance, or HR question. I should acknowledge I'm working and ready to help with their actual questions.",
+          "providerMetadata": {
+            "anthropic": {
+              "signature": "Ep4ECkYIChgCKkBK22zeRHK/tZyW7PlIQ4JUOwS5MCe5GxRPI67d1R0Nu455QNtl1Vqu7x9NgsGfRxJyC6CbiNsVHDq6gIKUBv5EEgxTGtcTltqu7SD8g3AaDIJKeISu9MznSoQrJSIwg90GydSgFYZLcB4tRDVZFHF7WOosiW5gy3pj2K5dls2Drl1OlzufkJiQjZyggazJKoUDGWdQqz7oGVBnNlTN2HYfiIZF63xuiwwXZkfeKsWoZVtInNg9cvMlCe6gWbRLGJ4oQwKwBugKzB7tNHdgvO/gxjDVQNEdyOBTKM8U0XH227B6a/t38UjWur9nC17vs0/M/9Ir5/88MZ5SFXVWtlMoBxdyOaMBx7Z44dwb6WjJpTahAh2FhQ9fuf4xMqq4qrRBW5E1mTVyRZwj/UVGU12Ii46JhGTf31RiGRFSnzHcGBTUrrHT1tn/yXRswESqiUi3F6FxjEs+d3MRzbNOQHW0vwDkRkjmC/V2CQYJk25dPpSV3s8m2bjAyk+c/B/xN3SgeTNBSeDs0/L2jJDT7NUqNQS4ao7WCGZ6Bp0g6fbwPOHETzcm+a7sT4pbdIrgqgLukLTagseuCX71y+rUk2nR1+NUMUUbbKfqBlEv08RwFc2NIKixVg+RYuxtSOfP3gIo0txrL2NTb8R3OdgVsckydCWTxi+YizGd+HY8nccNkNo1u/yB1noEQ9MUNTXBqPhIVNIkNPAYAQ=="
+            }
+          },
+          "state": "done"
+        },
+        {
+          "type": "text",
+          "text": "Yes, still working! Ready to help when you have an operations, compliance, or HR question.",
+          "state": "done"
+        }
+      ]
+    }
+  ]
+}

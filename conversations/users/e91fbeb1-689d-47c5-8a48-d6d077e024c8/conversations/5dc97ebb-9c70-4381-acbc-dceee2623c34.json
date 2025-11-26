@@ -1,0 +1,47 @@
+{
+  "metadata": {
+    "id": "5dc97ebb-9c70-4381-acbc-dceee2623c34",
+    "userId": "e91fbeb1-689d-47c5-8a48-d6d077e024c8",
+    "title": "update!",
+    "createdAt": 1764122245597,
+    "updatedAt": 1764122245597,
+    "messageCount": 2,
+    "previewText": "update!"
+  },
+  "messages": [
+    {
+      "parts": [
+        {
+          "type": "text",
+          "text": "update!"
+        }
+      ],
+      "id": "6R1QuMlzUGwoJjA9",
+      "role": "user"
+    },
+    {
+      "id": "SSHkwtgsicL9Qp1c",
+      "role": "assistant",
+      "parts": [
+        {
+          "type": "step-start"
+        },
+        {
+          "type": "reasoning",
+          "text": "The user just said \"update!\" which is very vague and unclear. According to my guidance:\n\n\"In cases where the underlying motive is unclear, such as for overly broad questions, unclear terminology or highly ambiguous statements, immediately reply only with one or two short direct questions for clarification.\"\n\nI need to ask a clarifying question to understand what they want to update. This could mean many things:\n- They want updates on something\n- They want help updating a policy or document\n- They're asking if there are updates to something\n- Something else entirely\n\nI should ask a short, direct question for clarification.",
+          "providerMetadata": {
+            "anthropic": {
+              "signature": "EpUGCkYIChgCKkCNbu1h+hZrxS1dRpUP2QaXWA5qSWUBolIMeiUcVKP0RT2j4RpX6QDVmbJo2EgUVZUZ1FRve+5jS4AKG70mWat3EgzUZvUpFY4t7rPmPHMaDPH1IsZTtBI6j9MUcCIwwazOzbfXoWPBQzMisE7PF2pueSyQr646WBg5p9i8LP9TW+vGBO+Irc9GlvHtEVLsKvwElhAalNRahjwvndZj0JwMmRmJCxNSKG9kk6CCJYgJ5L9jXuEZfIAxHV8bZvuuPp8nzKFJkJtYskxUdovgBK9ElxY+QiP2iU63/m3/mtQEcXs1w20A7WsXrJ1GWF5yXXG6Cr7lDi64H/X/sBsbPY/EENHkDw1fmTii58rLax8jmhNWwnJ3far8F0mdArbC8PyFE3trxONwu7xa/37pjfyIMkZBTpGjj3kTeC9rEQ4TTxFPW71l7BAaDAs4ojReEdPpeopAwQ7YdfN48LyVsFaCRgFpeE6Nr2K4xbBbhhmIiFmph+XJKV646Yh+Duamg5aOlyYNQbev8McQRLzlDXe9fWygxJmHgH3SxjtJm5Dj1RWfsXbFHdxkBmwskiw1ouDVjX17xQ6e9fAJEiAo+dB73RCIonlVSNjUNhFsQjXKCehqtOjKWYYYFu6jkwE4HaRmw/IvrY2kd+kSpKVqHI4u5SbtT1u0GfyaBXfbA1+YO8oIHt+EO9K2U2vae0f3CIO6Z2L9r8iH/+jCf4LVAdjaSgQcNPzWWrwPm7BXLwe9Dve+rC6/9GbS+YsQcS4CCx96d6h2G0xEJ4pG0jn4PfQAdNu7WyHhsUkBEj0ZQJ/84gQP6Cpu3zQQVDTMNvrqvcaBAOBHxgu47MEAUGvQU0BsUkXgRO4z+pd1tvMqxpom50vUh8c2es8gmIztm5U6L1fGjfdol6y/ATZT+mKnTrWV+vQdOYOyswf8CHV6PRLoTuueU1OS6HkSInrAmNUhPTrQ31f7TJCyZ4Lg5KgTiCuF6kY2W3tH0Z6zCE/wM2jAtAROWkXcFD8Nk28fLhRu6LFJxpEe9eN+Q7VJ+i4sGAE="
+            }
+          },
+          "state": "done"
+        },
+        {
+          "type": "text",
+          "text": "What would you like to update? Are you looking to update a specific policy, document, or process at your organization?",
+          "state": "done"
+        }
+      ]
+    }
+  ]
+}

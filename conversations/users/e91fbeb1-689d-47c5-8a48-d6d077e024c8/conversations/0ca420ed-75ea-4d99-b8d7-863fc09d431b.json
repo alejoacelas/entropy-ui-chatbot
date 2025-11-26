@@ -1,0 +1,47 @@
+{
+  "metadata": {
+    "id": "0ca420ed-75ea-4d99-b8d7-863fc09d431b",
+    "userId": "e91fbeb1-689d-47c5-8a48-d6d077e024c8",
+    "title": "test 3",
+    "createdAt": 1764122219847,
+    "updatedAt": 1764122219848,
+    "messageCount": 2,
+    "previewText": "test 3"
+  },
+  "messages": [
+    {
+      "parts": [
+        {
+          "type": "text",
+          "text": "test 3"
+        }
+      ],
+      "id": "306FsWEbe9yNBLpL",
+      "role": "user"
+    },
+    {
+      "id": "xUBROS7GArZUoE5Q",
+      "role": "assistant",
+      "parts": [
+        {
+          "type": "step-start"
+        },
+        {
+          "type": "reasoning",
+          "text": "The user has sent \"test 3\" which is not a real question or request. This appears to be a test message with no clear underlying action or decision they need help with.\n\nAccording to the guidance, when the underlying motive is unclear or for overly broad/ambiguous statements, I should immediately reply with short direct questions for clarification.\n\nHowever, \"test 3\" seems like the user is literally just testing the system rather than asking a real question. I should acknowledge this briefly and offer to help with actual operations questions.\n\nI should be concise and action-oriented, and ready to help with real questions about compliance, HR, fiscal sponsorship, or other operational topics relevant to small organizations.",
+          "providerMetadata": {
+            "anthropic": {
+              "signature": "Ev4GCkYIChgCKkD1I0iE/QQjnEyv+JHSivl/weZsgAgFhJLRf5vDif6KzBMkcoBw0AtCeNQ7T+rBAUqtm8wsXe4H8tGwnEeEG9H4EgxQhfggEdhRTz+WnW0aDH4CNOHDvQ49omnFBSIwoH5tPTiRFvl7TqzMRstO9OllKZ3tEztN3WINiAFTz6I1rKOg6j743SvCuVkP5AWBKuUF2X0Fcss+eJ3xY05FIsCYt3hIKOEG/789VnUjCtngEh6U/p2qsZyQLCruODkmQ9mBSOVACHxiZoMQTSN0S0+LST9UMnR4nRmXWC659d2hYy69JV06PT8x6FLhvoTm9XYj0h6ukkOeXjsg0Rq5bjYWjmAA5oPYK67WR8w6PjB1mFzNDYcMeMF9HTZo8gIRcGctBHhfMeZQ9B+GGvZVQywmlpWPz4j6TFjYdjLCC7xNWqIn8ZZUvuw1WRU47Hvr4MifjT+SivL1X6C8gHxDGyGIIAVKuEZNHBCglVw/EDAkMNBgKK05GCyC09jAqLYKfmVdgfBFwtThuBexx7dExxC7txoMiqyopnaxgRrh1wVILTz5Q+v1Jb+pS/hvfNjYvfNY6EAo1MQKo8zUrdZOW5m47KwbrOMtx/pNo9+ZOsquAfdk4l18u3VXEHg4vvdUcuhqwmdb5FeMlsv2p8RYbaP89vGzfzBvGS5hiDcOU4qPXv1GB3xWaq4S3C9Z0r7HjaW3mD5rp1TwQOaOw766iGXzxU4ZVvjv30um60xONB1HG+QFveP939uRefz+EUl5dJoV7+szyZuiZp9WgnP9zWHGogv1a1o420xfxZ0bOM/Y+7e9yQFqeeCOkSqLbrkKxn3AfRbmeoJOPobsuMHXK7LIPLlFtRBMcD1q0N1Fa0oCsRNrKbfFjkcBuNCIgsE59w/fsWtCgcX6xpjWH6oAk9Ikb55O7Dz0euVUwGsTo9Y/vH6cwDgvCpfhu24/mn/Crlj1G3kyu3fWGUllT2Ju6lPDH8i5UDgB1uy9FUlZ7/FugivtNxIk0ZyGd8hOsiAkaNnRPvVBCt4NbRIQ2xjpaO3HGTJIzlABAxssQ9S0ofJ0c+pBh2qNMPsrOvKeynyLXK9R78MKjO+UFQPtbQ6Xe8V7imNt5mThmnR91jgs40pyOLkEaorhogAzIARA2YxcEdCvKNN4qxmo+laxwLcHcxO5i2pSg4zPGAE="
+            }
+          },
+          "state": "done"
+        },
+        {
+          "type": "text",
+          "text": "I see you're testing the system! I'm ready to help when you have actual questions about operations, compliance, HR, fiscal sponsorship, or other organizational needs.\n\nWhat can I help you with today?",
+          "state": "done"
+        }
+      ]
+    }
+  ]
+}

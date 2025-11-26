@@ -1,0 +1,33 @@
+{
+  "userId": "e91fbeb1-689d-47c5-8a48-d6d077e024c8",
+  "conversations": [
+    {
+      "id": "5dc97ebb-9c70-4381-acbc-dceee2623c34",
+      "userId": "e91fbeb1-689d-47c5-8a48-d6d077e024c8",
+      "title": "update!",
+      "createdAt": 1764122245597,
+      "updatedAt": 1764122245597,
+      "messageCount": 2,
+      "previewText": "update!"
+    },
+    {
+      "id": "0ca420ed-75ea-4d99-b8d7-863fc09d431b",
+      "userId": "e91fbeb1-689d-47c5-8a48-d6d077e024c8",
+      "title": "test 3",
+      "createdAt": 1764122219847,
+      "updatedAt": 1764122219848,
+      "messageCount": 2,
+      "previewText": "test 3"
+    },
+    {
+      "id": "ea23b238-312f-4bda-86e4-445911a69d95",
+      "userId": "e91fbeb1-689d-47c5-8a48-d6d077e024c8",
+      "title": "test 2",
+      "createdAt": 1764121627295,
+      "updatedAt": 1764121716168,
+      "messageCount": 8,
+      "previewText": "test 2"
+    }
+  ],
+  "lastModified": 1764122245599
+}

@@ -24,6 +24,7 @@ interface ConversationHistorySidebarProps {
   onNewConversation: () => void;
   onDeleteConversation: (id: string) => void;
   onClearAll: () => void;
+  refreshKey?: number;
 }
 
 export function ConversationHistorySidebar({
@@ -32,6 +33,7 @@ export function ConversationHistorySidebar({
   onNewConversation,
   onDeleteConversation,
   onClearAll,
+  refreshKey,
 }: ConversationHistorySidebarProps) {
   const [conversations, setConversations] = useState<ConversationMetadata[]>([]);
   const [loading, setLoading] = useState(true);
@@ -40,6 +42,13 @@ export function ConversationHistorySidebar({
   useEffect(() => {
     loadConversations();
   }, []);
+
+  // Refresh when refreshKey changes
+  useEffect(() => {
+    if (refreshKey !== undefined && refreshKey > 0) {
+      loadConversations();
+    }
+  }, [refreshKey]);
 
   async function loadConversations() {
     setLoading(true);
@@ -76,7 +85,7 @@ export function ConversationHistorySidebar({
     e.stopPropagation();
     setDeletingId(id);
     try {
-      await onDeleteConversation(id);
+      onDeleteConversation(id);
       // Refresh the list after deletion
       await loadConversations();
     } finally {
@@ -86,7 +95,7 @@ export function ConversationHistorySidebar({
 
   const handleClearAll = async () => {
     try {
-      await onClearAll();
+      onClearAll();
       // Refresh the list after clearing
       await loadConversations();
     } catch (error) {
