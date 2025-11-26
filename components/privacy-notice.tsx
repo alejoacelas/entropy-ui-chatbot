@@ -22,7 +22,7 @@ export function PrivacyNotice({ onAccept }: PrivacyNoticeProps) {
   }, [onAccept]);
 
   return (
-    <div className="flex min-h-screen items-center justify-center p-4">
+    <div className="fixed inset-0 flex items-center justify-center p-4 z-50 bg-background">
       <Card className="w-full max-w-2xl">
         <div className="animate-in fade-in duration-300">
           <CardHeader className="space-y-4 pb-6 text-center">

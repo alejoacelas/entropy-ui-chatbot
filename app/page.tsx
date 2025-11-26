@@ -138,7 +138,7 @@ const ChatBotDemo = () => {
   const [isLoadingConversation, setIsLoadingConversation] = useState(false);
 
   const { messages, sendMessage, status, regenerate, setMessages } = useChat({
-    onFinish: async (message) => {
+    onFinish: async (event) => {
       // Auto-save after assistant responds
       if (logConversations) {
         try {
@@ -150,7 +150,7 @@ const ChatBotDemo = () => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               conversationId: currentConversationId,
-              messages: [...messages, message],
+              messages: event.messages,
               contextMessages: questionnaireAnswers?.answers,
               userId,
             }),
@@ -167,21 +167,20 @@ const ChatBotDemo = () => {
 
   // Check if privacy notice and questionnaire have been completed
   useEffect(() => {
-    const privacyAccepted = localStorage.getItem(PRIVACY_NOTICE_STORAGE_KEY);
-    const questionnaireCompleted = localStorage.getItem(QUESTIONNAIRE_STORAGE_KEY);
-    const answers = localStorage.getItem(QUESTIONNAIRE_ANSWERS_KEY);
+    if (typeof window !== 'undefined') {
+      const privacyAccepted = localStorage.getItem(PRIVACY_NOTICE_STORAGE_KEY);
+      const questionnaireCompleted = localStorage.getItem(QUESTIONNAIRE_STORAGE_KEY);
+      const answers = localStorage.getItem(QUESTIONNAIRE_ANSWERS_KEY);
 
-    console.log('[DEBUG] Privacy accepted:', privacyAccepted);
-    console.log('[DEBUG] Questionnaire completed:', questionnaireCompleted);
+      setShowPrivacyNotice(privacyAccepted !== 'true');
+      setShowQuestionnaire(questionnaireCompleted !== 'true');
 
-    setShowPrivacyNotice(privacyAccepted !== 'true');
-    setShowQuestionnaire(questionnaireCompleted !== 'true');
-
-    if (answers) {
-      try {
-        setQuestionnaireAnswers(JSON.parse(answers));
-      } catch {
-        // Ignore parse errors
+      if (answers) {
+        try {
+          setQuestionnaireAnswers(JSON.parse(answers));
+        } catch {
+          // Ignore parse errors
+        }
       }
     }
   }, []);
@@ -372,15 +371,8 @@ const ChatBotDemo = () => {
 
   // Show loading state while checking privacy notice and questionnaire status
   if (showPrivacyNotice === null || showQuestionnaire === null) {
-    console.log('[DEBUG] Loading... Privacy:', showPrivacyNotice, 'Questionnaire:', showQuestionnaire);
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="text-lg">Loading...</div>
-      </div>
-    );
+    return null;
   }
-
-  console.log('[DEBUG] Render state - Privacy:', showPrivacyNotice, 'Questionnaire:', showQuestionnaire);
 
   // Show privacy notice first if not accepted
   if (showPrivacyNotice) {
@@ -411,9 +403,6 @@ const ChatBotDemo = () => {
         <Conversation className="h-full">
           <ConversationContent>
             {messages.map((message) => {
-              console.log('[FRONTEND] Rendering message with', message.parts.length, 'parts');
-              console.log('[FRONTEND] Part types:', message.parts.map((p: any) => p.type));
-
               const isLastMessage = message.id === messages.at(-1)?.id;
               const allText = message.parts.filter(p => p.type === 'text').map(p => p.text).join('');
 
@@ -552,7 +541,6 @@ const ChatBotDemo = () => {
                                 <Action
                                   onClick={() => {
                                     // TODO: Implement thumbs up functionality
-                                    console.log('Thumbs up clicked for message:', message.id);
                                   }}
                                   label="Thumbs up"
                                 >
@@ -561,7 +549,6 @@ const ChatBotDemo = () => {
                                 <Action
                                   onClick={() => {
                                     // TODO: Implement thumbs down functionality
-                                    console.log('Thumbs down clicked for message:', message.id);
                                   }}
                                   label="Thumbs down"
                                 >

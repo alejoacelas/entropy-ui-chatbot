@@ -154,7 +154,7 @@ export function Questionnaire({ onComplete, onSkip }: QuestionnaireProps) {
   const currentQuestion = screen === 'question1' ? 1 : screen === 'question2' ? 2 : screen === 'question3' ? 3 : 0;
 
   return (
-    <div className="flex min-h-screen items-center justify-center p-4">
+    <div className="fixed inset-0 flex items-center justify-center p-4 z-50 bg-background">
       <Card className="w-full max-w-2xl">
         {/* Landing Screen */}
         {screen === 'landing' && (
