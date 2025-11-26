@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import {
   Sidebar,
   SidebarContent,
@@ -39,18 +39,7 @@ export function ConversationHistorySidebar({
   const [loading, setLoading] = useState(true);
   const [deletingId, setDeletingId] = useState<string | null>(null);
 
-  useEffect(() => {
-    loadConversations();
-  }, []);
-
-  // Refresh when refreshKey changes
-  useEffect(() => {
-    if (refreshKey !== undefined && refreshKey > 0) {
-      loadConversations();
-    }
-  }, [refreshKey]);
-
-  async function loadConversations() {
+  const loadConversations = useCallback(async () => {
     setLoading(true);
     try {
       const userId = getUserId();
@@ -70,7 +59,18 @@ export function ConversationHistorySidebar({
     } finally {
       setLoading(false);
     }
-  }
+  }, []);
+
+  useEffect(() => {
+    loadConversations();
+  }, [loadConversations]);
+
+  // Refresh when refreshKey changes
+  useEffect(() => {
+    if (refreshKey !== undefined && refreshKey > 0) {
+      loadConversations();
+    }
+  }, [refreshKey, loadConversations]);
 
   const formatRelativeTime = (timestamp: number) => {
     const seconds = Math.floor((Date.now() - timestamp) / 1000);
