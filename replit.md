@@ -4,6 +4,15 @@ This is an AI chatbot application built with Next.js 15 and React 19. The applic
 
 # Recent Changes
 
+**November 25, 2025** - Storage System Implementation
+- Added abstracted storage system (`/storage/`) supporting both local and cloud storage
+  - `IStorage.ts`: Common interface for all storage implementations
+  - `FileSystemStorage.ts`: Local file system storage for development/testing
+  - `ObjectStorage.ts`: Replit Object Storage for production deployments
+  - `StorageFactory.ts`: Factory pattern to automatically select appropriate storage based on environment
+  - Uses `REPLIT_DEPLOYMENT=1` to detect production and `STORAGE_BUCKET_NAME` for bucket configuration
+- Added `@google-cloud/storage` dependency for object storage integration
+
 **November 11, 2025** - Enhanced Citation Support & Bug Fixes
 - Added AI SDK patches (`/patches/`) for web search citation support from Anthropic
   - `@ai-sdk/anthropic` patch: Handles `web_search_result_location` citation types
@@ -108,6 +117,29 @@ Preferred communication style: Simple, everyday language.
 - Path aliases for clean imports (`@/*`)
 - Next.js plugin for enhanced IDE support
 - ES2017 target for modern JavaScript features
+
+## Storage System
+
+**Abstracted Storage Layer** (`/storage/`)
+- Common interface (`IStorage`) for save, load, list, delete, and exists operations
+- Automatic environment detection via `StorageFactory`:
+  - **Development**: Uses `FileSystemStorage` for local file system operations
+  - **Production**: Uses `ObjectStorage` for Replit Object Storage (Google Cloud Storage backed)
+- Factory pattern with singleton instance for consistent storage access
+- JSON serialization for data persistence
+
+**Usage**:
+```typescript
+import { StorageFactory } from './storage';
+
+const storage = StorageFactory.getStorage();
+await storage.save('data/file.json', { key: 'value' });
+const data = await storage.load<MyType>('data/file.json');
+```
+
+**Environment Variables for Production**:
+- `REPLIT_DEPLOYMENT=1`: Auto-set by Replit when deployed
+- `STORAGE_BUCKET_NAME`: Must be set to the bucket name created in Object Storage tool
 
 ## Development Workflow
 

@@ -387,6 +387,24 @@ const ChatBotDemo = () => {
                                 >
                                   <CopyIcon className="size-3" />
                                 </Action>
+                                <Action
+                                  onClick={() => {
+                                    // TODO: Implement thumbs up functionality
+                                    console.log('Thumbs up clicked for message:', message.id);
+                                  }}
+                                  label="Thumbs up"
+                                >
+                                  <ThumbsUpIcon className="size-3" />
+                                </Action>
+                                <Action
+                                  onClick={() => {
+                                    // TODO: Implement thumbs down functionality
+                                    console.log('Thumbs down clicked for message:', message.id);
+                                  }}
+                                  label="Thumbs down"
+                                >
+                                  <ThumbsDownIcon className="size-3" />
+                                </Action>
                               </Actions>
                             )}
                           </Fragment>
