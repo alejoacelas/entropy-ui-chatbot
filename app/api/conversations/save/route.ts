@@ -32,8 +32,15 @@ export async function POST(req: NextRequest) {
       userId: string;
     } = await req.json();
 
+    console.log('[SAVE API] Received request:', {
+      conversationId,
+      messageCount: messages?.length,
+      userId: userId?.substring(0, 8) + '...',
+    });
+
     // Validate required fields
     if (!userId) {
+      console.error('[SAVE API] No user ID provided');
       return NextResponse.json(
         { error: 'User ID is required' },
         { status: 400 }
@@ -41,6 +48,7 @@ export async function POST(req: NextRequest) {
     }
 
     if (!messages || !Array.isArray(messages)) {
+      console.error('[SAVE API] Invalid messages:', typeof messages);
       return NextResponse.json(
         { error: 'Messages array is required' },
         { status: 400 }
@@ -49,6 +57,7 @@ export async function POST(req: NextRequest) {
 
     // Check rate limit
     if (!checkRateLimit(userId)) {
+      console.warn('[SAVE API] Rate limit exceeded for user');
       return NextResponse.json(
         { error: 'Rate limit exceeded. Please wait before saving again.' },
         { status: 429 }
@@ -77,12 +86,13 @@ export async function POST(req: NextRequest) {
     // Save conversation
     const newId = await saveConversation(userId, conversationId, messages, contextMessages);
 
+    console.log('[SAVE API] Successfully saved:', newId);
     return NextResponse.json({
       conversationId: newId,
       success: true,
     });
   } catch (error) {
-    console.error('Save conversation error:', error);
+    console.error('[SAVE API] Error:', error);
 
     // Check for quota exceeded error
     if (error instanceof Error && error.message.includes('quota')) {

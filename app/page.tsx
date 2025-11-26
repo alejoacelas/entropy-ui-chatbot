@@ -23,7 +23,7 @@ import {
   PromptInputTools,
 } from '@/components/ai-elements/prompt-input';
 import { Action, Actions } from '@/components/ai-elements/actions';
-import { Fragment, useState, useEffect } from 'react';
+import { Fragment, useState, useEffect, useRef } from 'react';
 import { useChat } from '@ai-sdk/react';
 import { Response } from '@/components/ai-elements/response';
 import { CopyIcon, GlobeIcon, RefreshCcwIcon, ClipboardListIcon, ThumbsUpIcon, ThumbsDownIcon, SettingsIcon } from 'lucide-react';
@@ -137,26 +137,46 @@ const ChatBotDemo = () => {
   const [currentConversationId, setCurrentConversationId] = useState<string | null>(null);
   const [isLoadingConversation, setIsLoadingConversation] = useState(false);
 
+  // Use ref to avoid stale closure in onFinish callback
+  const conversationIdRef = useRef<string | null>(null);
+
   const { messages, sendMessage, status, regenerate, setMessages } = useChat({
     onFinish: async (event) => {
       // Auto-save after assistant responds
       if (logConversations) {
         try {
           const userId = getUserId();
-          if (!userId) return;
+          if (!userId) {
+            console.log('No user ID, skipping save');
+            return;
+          }
+
+          console.log('Saving conversation...', {
+            currentId: conversationIdRef.current,
+            messageCount: event.messages.length,
+          });
 
           const response = await fetch('/api/conversations/save', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-              conversationId: currentConversationId,
+              conversationId: conversationIdRef.current,
               messages: event.messages,
               contextMessages: questionnaireAnswers?.answers,
               userId,
             }),
           });
-          const { conversationId: newId } = await response.json();
-          setCurrentConversationId(newId);
+
+          if (!response.ok) {
+            const errorText = await response.text();
+            console.error('Failed to save conversation:', response.status, errorText);
+            return;
+          }
+
+          const data = await response.json();
+          console.log('Conversation saved:', data.conversationId);
+          conversationIdRef.current = data.conversationId;
+          setCurrentConversationId(data.conversationId);
         } catch (error) {
           console.error('Failed to save conversation:', error);
           // Don't disrupt chat flow on save error
@@ -299,6 +319,7 @@ const ChatBotDemo = () => {
 
       const { conversation } = await response.json();
 
+      conversationIdRef.current = id;
       setCurrentConversationId(id);
       setMessages(conversation.messages);
       setInput('');
@@ -310,6 +331,7 @@ const ChatBotDemo = () => {
   }
 
   function startNewConversation() {
+    conversationIdRef.current = null;
     setCurrentConversationId(null);
     setMessages([]);
     setInput('');
